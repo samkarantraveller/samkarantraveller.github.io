@@ -2227,7 +2227,7 @@ function saveViewedPackage(packageId) {
 }
         
         grid.innerHTML = packages.map(pkg => `
-            <div class="uk-card">
+            <div class="uk-card" data-package-id="${pkg.id}" onclick="saveViewedPackage('${pkg.id}')">
             ${pkg.cover_image_url ? `
           <img
         src="${pkg.cover_image_url}"
