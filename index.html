@@ -2325,8 +2325,34 @@ if (weekendPackageContainer) {
         `).join("")
         : "<p>No Long Weekend packages available.</p>";
 }
-        
 
+        // DYNAMIC UTTARAKHAND TOUR PACKAGES
+const uttarakhandContainer = document.getElementById("uttarakhandPackageGrid");
+
+if (uttarakhandContainer) {
+    const uttarakhandPackages = packages.filter(pkg =>
+        Array.isArray(pkg.website_sections) &&
+        pkg.website_sections.includes("Plan Your Uttarakhand Tour Package")
+    );
+
+    uttarakhandContainer.innerHTML = uttarakhandPackages.length
+        ? uttarakhandPackages.map(pkg => `
+            <div class="uk-card">
+                ${pkg.cover_image_url ? `
+                    <img
+                        src="${pkg.cover_image_url}"
+                        alt="${pkg.title || 'Travel Package'}"
+                        style="width:calc(100% + 40px); height:180px; object-fit:cover; display:block; border-radius:12px 12px 0 0; margin:-20px -20px 12px;"
+                    >
+                ` : ""}
+                <h4>${pkg.title || "Travel Package"}</h4>
+                <p>${pkg.duration_days} Days / ${pkg.duration_nights} Nights</p>
+                <strong>₹${Number(pkg.price || 0).toLocaleString("en-IN")}</strong>
+                <a target="_blank" href="https://wa.me/917895612495?text=${encodeURIComponent("Hello SamKaranTraveller, I am interested in " + pkg.title)}">Book Now</a>
+            </div>
+        `).join("")
+        : "<p>No Uttarakhand packages available.</p>";
+}
         if (!packages.length) {
             status.textContent = "No packages available.";
             return;
