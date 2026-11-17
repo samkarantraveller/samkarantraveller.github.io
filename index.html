@@ -2212,6 +2212,20 @@ if (trendingContainer) {
 
         status.textContent = "";
 
+        // SAVE RECENTLY VIEWED TOURS
+const historyKey = "samkaran_recently_viewed";
+
+function saveViewedPackage(packageId) {
+    let history = JSON.parse(localStorage.getItem(historyKey) || "[]");
+
+    history = [
+        packageId,
+        ...history.filter(id => id !== packageId)
+    ].slice(0, 10);
+
+    localStorage.setItem(historyKey, JSON.stringify(history));
+}
+        
         grid.innerHTML = packages.map(pkg => `
             <div class="uk-card">
             ${pkg.cover_image_url ? `
