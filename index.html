@@ -2092,6 +2092,33 @@ async function loadLivePackages() {
 
         const data = await response.json();
         const packages = data.packages || [];
+    
+// DYNAMIC MUST-SEE HISTORY PACKAGES
+const historyPackageContainer = document.getElementById("historyPackageGrid");
+
+if (historyPackageContainer) {
+    const historyPackages = packages.filter(pkg =>
+        Array.isArray(pkg.website_sections) &&
+        pkg.website_sections.includes("Must-See Tours from Your History!")
+    );
+
+    historyPackageContainer.innerHTML = historyPackages.length
+        ? historyPackages.map(pkg => `
+            <div class="history-card">
+                <div class="history-image">
+                    <img
+                        src="${pkg.cover_image_url || 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80'}"
+                        alt="${pkg.title || 'Travel Package'}"
+                    >
+                    <span>SKT</span>
+                    <b>${pkg.duration_days} Days</b>
+                </div>
+                <h3>${pkg.title || "Travel Package"}</h3>
+                <p>Start From <strong>₹${Number(pkg.price || 0).toLocaleString("en-IN")}*</strong></p>
+            </div>
+        `).join("")
+        : "<p>No Must-See Tours available.</p>";
+    }
 
 // DYNAMIC LONG WEEKEND PACKAGES
 const weekendPackageContainer = document.getElementById("weekendPackageGrid");
