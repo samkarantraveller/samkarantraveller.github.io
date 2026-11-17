@@ -2297,6 +2297,35 @@ async function loadLivePackages() {
         const data = await response.json();
         const packages = data.packages || [];
 
+// DYNAMIC LONG WEEKEND PACKAGES
+const weekendSlider = document.getElementById("weekendSlider");
+
+if (weekendSlider) {
+    const weekendPackages = packages.filter(pkg =>
+        Array.isArray(pkg.website_sections) &&
+        pkg.website_sections.includes("LONG WEEKEND")
+    );
+
+    weekendSlider.innerHTML = weekendPackages.length
+        ? weekendPackages.map(pkg => `
+            <div class="weekend-card">
+                <img
+                    src="${pkg.cover_image_url || 'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=600&q=80'}"
+                    alt="${pkg.title || 'Travel Package'}"
+                >
+                <div class="weekend-info">
+                    <h3>${pkg.title || "Travel Package"}</h3>
+                    <p>${pkg.duration_days} Days / ${pkg.duration_nights} Nights</p>
+                    <div class="weekend-price">
+                        Starts from ₹${Number(pkg.price || 0).toLocaleString("en-IN")}
+                    </div>
+                </div>
+            </div>
+        `).join("")
+        : "<p>No Long Weekend packages available.</p>";
+}
+        
+
         if (!packages.length) {
             status.textContent = "No packages available.";
             return;
