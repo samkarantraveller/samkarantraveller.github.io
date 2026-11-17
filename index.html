@@ -2351,9 +2351,10 @@ async function loadLivePackages() {
         grid.innerHTML = packages.map(pkg => `
             <div class="uk-card">
             ${pkg.cover_image_url ? `
-        <img src="${pkg.cover_image_url}"
-     alt="${pkg.title || 'Travel Package'}"
-     style="width:calc(100% + 40px); height:180px; object-fit:cover; display:block; border-radius:12px 12px 0 0; margin:-20px -20px 12px;">
+        <img src="${pkg.cover_image_url}"  
+alt="${pkg.title || 'Travel Package'}"  
+style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:12px;">
+style="width:calc(100% + 40px); height:180px; object-fit:cover; display:block; border-radius:12px 12px 0 0; margin:-20px -20px 12px;">
        ` : ''}
                 <h4>${pkg.title || "Travel Package"}</h4>
                 <p>📍 ${pkg.destination || ""}</p>
