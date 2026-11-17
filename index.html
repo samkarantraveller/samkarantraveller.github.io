@@ -2325,6 +2325,47 @@ setInterval(() => {
         © 2026 SamKaranTraveller. All Rights Reserved.
     </div> 
 </footer>
+
+<script>
+async function loadLivePackages() {
+    const status = document.getElementById("livePackageStatus");
+    const grid = document.getElementById("livePackageGrid");
+
+    try {
+        const response = await fetch(
+            "https://samkarantraveller-management-system.vercel.app/api/public-packages"
+        );
+
+        if (!response.ok) throw new Error("API Error");
+
+        const data = await response.json();
+        const packages = data.packages || [];
+
+        if (!packages.length) {
+            status.textContent = "No packages available.";
+            return;
+        }
+
+        status.textContent = "";
+
+        grid.innerHTML = packages.map(pkg => `
+            <div class="uk-card">
+                <h4>${pkg.title || "Travel Package"}</h4>
+                <p>📍 ${pkg.destination || ""}</p>
+                <p>${pkg.duration_days} Days / ${pkg.duration_nights} Nights</p>
+                <strong>₹${Number(pkg.price || 0).toLocaleString("en-IN")}</strong>
+                <a target="_blank" href="https://wa.me/917895612495?text=${encodeURIComponent("Hello SamKaranTraveller, I am interested in " + pkg.title)}">Book Now</a>
+            </div>
+        `).join("");
+
+    } catch (error) {
+        status.textContent = "Packages load nahi ho paaye.";
+        console.error(error);
+    }
+}
+
+loadLivePackages();
+</script>
     
 </body>
 </html>
