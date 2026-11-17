@@ -2298,15 +2298,15 @@ async function loadLivePackages() {
         const packages = data.packages || [];
 
 // DYNAMIC LONG WEEKEND PACKAGES
-const weekendSlider = document.getElementById("weekendSlider");
+const weekendPackageContainer = document.getElementById("weekendPackageGrid");
 
-if (weekendSlider) {
+if (weekendPackageContainer) {
     const weekendPackages = packages.filter(pkg =>
         Array.isArray(pkg.website_sections) &&
         pkg.website_sections.includes("LONG WEEKEND")
     );
 
-    weekendSlider.innerHTML = weekendPackages.length
+    weekendPackageContainer.innerHTML = weekendPackages.length
         ? weekendPackages.map(pkg => `
             <div class="weekend-card">
                 <img
