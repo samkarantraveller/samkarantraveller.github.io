@@ -411,6 +411,41 @@ flex:1 1 220px;
   width: auto;
   display: block;
 } 
+/* LIVE PACKAGES DESIGN */
+#live-packages {
+    padding: 50px 20px;
+    text-align: center;
+    background: #f8fafc;
+}
+
+#live-packages h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #123456;
+}
+
+#live-packages .uk-subtitle {
+    margin-bottom: 25px;
+    color: #666;
+}
+
+#livePackageStatus {
+    margin: 15px 0;
+    color: #555;
+}
+
+#live-packages .uk-package-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+}
+
+#live-packages .uk-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
 </style>
 </head>
 
@@ -533,6 +568,15 @@ Travel this August & September with expertly planned, unforgettable holidays.
 
 </section> 
 
+<!-- LIVE PACKAGES FROM MANAGEMENT SYSTEM -->
+<section class="uk-packages" id="live-packages">
+    <h2>🌄 Our Latest Travel Packages</h2>
+    <p class="uk-subtitle">Explore our latest published packages</p>
+
+    <div id="livePackageStatus">Loading packages...</div>
+    <div class="uk-package-container" id="livePackageGrid"></div>
+</section>
+    
 <!-- Uttarakhand Tour Packages -->
 <section class="uk-packages">
 
