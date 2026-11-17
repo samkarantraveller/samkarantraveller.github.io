@@ -1597,7 +1597,8 @@ document.querySelectorAll(".uk-card").forEach(card => {
     <h2>Similar Tours You Like</h2>
     <p>Pack your bags and join us for an unforgettable journey!</p>
 
-    <div class="similar-container">
+    <div class="similar-container" 
+     id="similarPackageGrid">
 
         <div class="similar-card">
             <div class="similar-image">
@@ -2120,6 +2121,32 @@ if (historyPackageContainer) {
         : "<p>No Must-See Tours available.</p>";
     }
 
+    // DYNAMIC SIMILAR TOURS
+const similarPackageContainer = document.getElementById("similarPackageGrid");
+
+if (similarPackageContainer) {
+    const similarPackages = packages.filter(pkg =>
+        Array.isArray(pkg.website_sections) &&
+        pkg.website_sections.includes("Similar Tours You Like")
+    );
+
+    similarPackageContainer.innerHTML = similarPackages.length
+        ? similarPackages.map(pkg => `
+            <div class="similar-card">
+                <div class="similar-image">
+                    <img
+                        src="${pkg.cover_image_url || 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80'}"
+                        alt="${pkg.title || 'Travel Package'}"
+                    >
+                    <span>SKT</span>
+                    <h3>${pkg.title || "Travel Package"}</h3>
+                    <p>Start From <strong>₹${Number(pkg.price || 0).toLocaleString("en-IN")}</strong></p>
+                </div>
+            </div>
+        `).join("")
+        : "<p>No Similar Tours available.</p>";
+}
+        
 // DYNAMIC LONG WEEKEND PACKAGES
 const weekendPackageContainer = document.getElementById("weekendPackageGrid");
 
