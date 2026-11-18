@@ -1026,6 +1026,9 @@ document.getElementById("tourPrice").textContent =
 document.getElementById("summaryTourPrice").textContent =
     Number(tour.price || 0).toLocaleString("en-IN");
 
+document.getElementById("tourOverview").textContent =
+    tour.overview || tour.short_description || "Tour details coming soon.";
+
 
 /* =====================================================
    ITINERARY
@@ -1034,15 +1037,15 @@ document.getElementById("summaryTourPrice").textContent =
 const itineraryBox =
     document.getElementById("itinerary");
 
-tour.itinerary.forEach(day => {
+(tour.itinerary || []).forEach(day => {
 
     itineraryBox.innerHTML += `
 
         <div class="day">
 
-            <h3>${day[0]} — ${day[1]}</h3>
+            <h3>${day.day || day.title || day[0] || "Tour Day"} — ${day.route || day.location || day[1] || ""}</h3>
 
-            <p>${day[2]}</p>
+             <p>${day.description || day.details || day[2] || ""}</p>
 
         </div>
 
@@ -1058,7 +1061,7 @@ tour.itinerary.forEach(day => {
 const includedBox =
     document.getElementById("included");
 
-tour.included.forEach(item => {
+(tour.inclusions || tour.included || []).forEach(item => {
 
     includedBox.innerHTML +=
         `<li>${item}</li>`;
@@ -1073,7 +1076,7 @@ tour.included.forEach(item => {
 const excludedBox =
     document.getElementById("excluded");
 
-tour.excluded.forEach(item => {
+(tour.exclusions || tour.excluded || []).forEach(item => {
 
     excludedBox.innerHTML +=
         `<li>${item}</li>`;
