@@ -1288,6 +1288,65 @@ Total: ₹${total.toLocaleString("en-IN")}`;
 
 updateSummary();
 
+/* =====================================================
+   LOAD PACKAGE FROM MANAGEMENT SYSTEM
+===================================================== */
+
+async function loadManagementPackage() {
+
+    try {
+
+        const response = await fetch(
+            "https://samkarantraveller-management-system.vercel.app/api/public-packages"
+        );
+
+        if (!response.ok) {
+            throw new Error("Package API Error");
+        }
+
+        const data = await response.json();
+
+        const packageData = (data.packages || []).find(
+            pkg => pkg.id === tourName
+        );
+
+        if (!packageData) return;
+
+        tour = packageData;
+
+        document.getElementById("tourTitle").textContent =
+            tour.title;
+
+        document.getElementById("tourImage").src =
+            tour.cover_image_url || "";
+
+        document.getElementById("tourDuration").textContent =
+            `⏱ ${tour.duration_days} Days / ${tour.duration_nights} Nights`;
+
+        document.getElementById("tourRoute").textContent =
+            "📍 " + (tour.destination || "Uttarakhand");
+
+        document.getElementById("tourPrice").textContent =
+            Number(tour.price || 0).toLocaleString("en-IN");
+
+        document.getElementById("tourOverview").textContent =
+            tour.overview || tour.short_description || "Tour details coming soon.";
+
+        selectedTransport =
+            (tour.transport_details?.vehicles || [])[0] || null;
+
+        updateSummary();
+
+    } catch (error) {
+
+        console.error("Package loading failed:", error);
+
+    }
+
+}
+
+loadManagementPackage();
+    
 </script>
 
 </body>
