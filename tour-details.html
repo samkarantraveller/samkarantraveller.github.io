@@ -1083,6 +1083,32 @@ const excludedBox =
 
 });
 
+/* =====================================================
+   TOUR ACTIVITIES
+===================================================== */
+
+const activitiesGrid =
+    document.getElementById("activitiesGrid");
+
+activitiesGrid.innerHTML = "";
+
+(tour.activities || []).forEach(activity => {
+
+    const activityName =
+        typeof activity === "string"
+            ? activity
+            : activity.name ||
+              activity.title ||
+              activity.activity ||
+              activity.description ||
+              "";
+
+    if (activityName) {
+        activitiesGrid.innerHTML +=
+            `<p>${activityName}</p>`;
+    }
+
+});
 
 /* =====================================================
    TRANSPORTATION
