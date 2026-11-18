@@ -1099,6 +1099,25 @@ function startGalleryAutoSlide() {
         }, 3000);
     }
 }
+
+/* ================= MOBILE SWIPE ================= */
+
+let touchStartX = 0;
+
+const tourGallery = document.getElementById("tourGallery");
+
+tourGallery.addEventListener("touchstart", function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+tourGallery.addEventListener("touchend", function(e) {
+    const touchEndX = e.changedTouches[0].screenX;
+    const difference = touchStartX - touchEndX;
+
+    if (Math.abs(difference) > 50) {
+        changeGallerySlide(difference > 0 ? 1 : -1);
+    }
+}, { passive: true });
     
 /* =====================================================
    GET TOUR FROM URL
@@ -1451,8 +1470,32 @@ async function loadManagementPackage() {
         document.getElementById("tourTitle").textContent =
             tour.title;
 
-        document.getElementById("tourImage").src =
-            tour.cover_image_url || "";
+        /* ================= LOAD PACKAGE GALLERY ================= */
+
+              galleryImages = [
+              tour.cover_image_url,
+             ...(tour.gallery || [])
+            ].filter(Boolean);
+
+            galleryImages = [...new Set(galleryImages)];
+
+            currentGalleryIndex = 0;
+
+    const galleryDots = document.getElementById("galleryDots");
+                       galleryDots.innerHTML = "";
+
+             galleryImages.forEach((image, index) => {
+             galleryDots.innerHTML += `
+        <button class="gallery-dot ${index === 0 ? "active" : ""}"
+                onclick="showGallerySlide(${index})">
+            </button>
+        `;
+    });
+
+          if (galleryImages.length > 0) {
+              showGallerySlide(0);
+             startGalleryAutoSlide();
+         }
 
         document.getElementById("tourDuration").textContent =
             `⏱ ${tour.duration_days} Days / ${tour.duration_nights} Nights`;
