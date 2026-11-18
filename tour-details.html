@@ -1216,10 +1216,12 @@ function selectDate(element, date){
 
 function updateSummary(){
 
-    const tourPrice = tour.price;
+    const tourPrice =
+    Number(tour.price || 0);
 
     const transportPrice =
-        selectedTransport ? selectedTransport.price : 0;
+        selectedTransport ?
+        Number(selectedTransport.price || 0) : 0;
 
     const total =
         tourPrice + transportPrice;
