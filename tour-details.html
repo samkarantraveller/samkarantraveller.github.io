@@ -1116,19 +1116,20 @@ activitiesGrid.innerHTML = "";
    TRANSPORTATION
 ===================================================== */
 
-const transportGrid =
+   const transportGrid =
     document.getElementById("transportGrid");
 
-let selectedTransport = null;
-let selectedDate = "05 Sep 2026";
+   transportGrid.innerHTML = "";
+
+     (tour.transport_details?.vehicles ||
+     tour.transport || []).forEach((vehicle, index) => {
 
     transportGrid.innerHTML += `
-
         <div class="vehicle ${index === 0 ? "selected" : ""}"
              onclick="selectVehicle(${index})"
              id="vehicle-${index}">
 
-            <img src="${vehicle.image}"
+            <img src="${vehicle.image || ""}"
                  alt="${vehicle.name}">
 
             <div class="vehicle-info">
@@ -1140,7 +1141,7 @@ let selectedDate = "05 Sep 2026";
                 </div>
 
                 <div class="vehicle-price">
-                    ₹${vehicle.price.toLocaleString("en-IN")}
+                    ₹${Number(vehicle.price || 0).toLocaleString("en-IN")}
                 </div>
 
                 <button class="select-btn">
@@ -1148,19 +1149,15 @@ let selectedDate = "05 Sep 2026";
                 </button>
 
             </div>
-
         </div>
-
     `;
-
 });
-
 
 /* Default vehicle */
 
 selectedTransport =
-(tour.transport_details?.vehicles ||
- tour.transport || [])[0] || null;
+    (tour.transport_details?.vehicles ||
+     tour.transport || [])[0] || null;
 
 updateSummary();
 
