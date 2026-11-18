@@ -1095,7 +1095,8 @@ let selectedTransport = null;
 let selectedDate = "05 Sep 2026";
 
 
-tour.transport.forEach((vehicle,index) => {
+(tour.transport_details?.vehicles || 
+ tour.transport || []).forEach((vehicle,index) => {
 
     transportGrid.innerHTML += `
 
