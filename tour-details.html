@@ -1291,6 +1291,8 @@ updateSummary();
 async function loadManagementPackage() {
 
     try {
+        
+        if (!isPackageId) return;
 
         const response = await fetch(
             "https://samkarantraveller-management-system.vercel.app/api/public-packages"
@@ -1310,6 +1312,19 @@ async function loadManagementPackage() {
 
         tour = packageData;
 
+        const itineraryBox = document.getElementById("itinerary");
+
+          itineraryBox.innerHTML = "";
+
+         (tour.itinerary || []).forEach(day => {
+         itineraryBox.innerHTML += `
+           <div class="day">
+            <h3>${day.day || day.title || day[0] || "Tour Day"} — ${day.route || day.location || day[1] || ""}</h3>
+            <p>${day.description || day.details || day[2] || ""}</p>
+            </div>
+        `;
+    });
+        
         document.getElementById("tourTitle").textContent =
             tour.title;
 
