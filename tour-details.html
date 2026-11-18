@@ -1324,6 +1324,19 @@ async function loadManagementPackage() {
             </div>
         `;
     });
+     const includedBox = document.getElementById("included");
+          includedBox.innerHTML = "";
+
+         (tour.inclusions || []).forEach(item => {
+         includedBox.innerHTML += `<li>${typeof item === "string" ? item : item.name || item.title || item.description || ""}</li>`;
+      });
+        
+    const excludedBox = document.getElementById("excluded");
+          excludedBox.innerHTML = "";
+
+         (tour.exclusions || []).forEach(item => {
+         excludedBox.innerHTML += `<li>${typeof item === "string" ? item : item.name || item.title || item.description || ""}</li>`;
+    });
         
         document.getElementById("tourTitle").textContent =
             tour.title;
