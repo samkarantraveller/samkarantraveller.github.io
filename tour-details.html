@@ -1133,7 +1133,9 @@ tour.transport.forEach((vehicle,index) => {
 
 /* Default vehicle */
 
-selectedTransport = tour.transport[0];
+selectedTransport =
+(tour.transport_details?.vehicles ||
+ tour.transport || [])[0] || null;
 
 updateSummary();
 
@@ -1144,7 +1146,9 @@ updateSummary();
 
 function selectVehicle(index){
 
-    selectedTransport = tour.transport[index];
+    selectedTransport =
+    (tour.transport_details?.vehicles || 
+     tour.transport || [])[index];
 
     document.querySelectorAll(".vehicle").forEach(vehicle => {
         vehicle.classList.remove("selected");
