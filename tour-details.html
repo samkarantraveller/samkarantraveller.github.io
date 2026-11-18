@@ -1353,10 +1353,62 @@ async function loadManagementPackage() {
         document.getElementById("tourOverview").textContent =
             tour.overview || tour.short_description || "Tour details coming soon.";
 
-        selectedTransport =
-            (tour.transport_details?.vehicles || [])[0] || null;
+        const activitiesGrid =
+    document.getElementById("activitiesGrid");
 
-        updateSummary();
+activitiesGrid.innerHTML = "";
+
+(tour.activities || []).forEach(activity => {
+
+    const activityName =
+        typeof activity === "string"
+            ? activity
+            : activity.name ||
+              activity.title ||
+              activity.activity ||
+              activity.description ||
+              "";
+
+    if (activityName) {
+        activitiesGrid.innerHTML +=
+            `<p>${activityName}</p>`;
+    }
+});
+        const transportGrid =
+    document.getElementById("transportGrid");
+
+transportGrid.innerHTML = "";
+
+(tour.transport_details?.vehicles || []).forEach((vehicle, index) => {
+
+    transportGrid.innerHTML += `
+        <div class="vehicle ${index === 0 ? "selected" : ""}"
+             onclick="selectVehicle(${index})"
+             id="vehicle-${index}">
+
+            <img src="${vehicle.image || ""}" alt="${vehicle.name}">
+
+            <div class="vehicle-info">
+                <h3>${vehicle.name}</h3>
+
+                <div class="capacity">
+                    👥 ${vehicle.persons} Persons
+                </div>
+
+                <div class="vehicle-price">
+                    ₹${Number(vehicle.price || 0).toLocaleString("en-IN")}
+                </div>
+
+                <button class="select-btn">Select Vehicle</button>
+            </div>
+        </div>
+    `;
+});
+
+selectedTransport =
+    (tour.transport_details?.vehicles || [])[0] || null;
+
+updateSummary();
 
     } catch (error) {
 
