@@ -1065,7 +1065,41 @@ const tours = {
 
 };
 
+/* ================= GALLERY SLIDER ================= */
 
+let galleryImages = [];
+let currentGalleryIndex = 0;
+let galleryTimer = null;
+
+function showGallerySlide(index) {
+    if (!galleryImages.length) return;
+
+    currentGalleryIndex =
+        (index + galleryImages.length) % galleryImages.length;
+
+    document.getElementById("tourImage").src =
+        galleryImages[currentGalleryIndex];
+
+    document.querySelectorAll(".gallery-dot").forEach((dot, i) => {
+        dot.classList.toggle("active", i === currentGalleryIndex);
+    });
+}
+
+function changeGallerySlide(direction) {
+    showGallerySlide(currentGalleryIndex + direction);
+    startGalleryAutoSlide();
+}
+
+function startGalleryAutoSlide() {
+    clearInterval(galleryTimer);
+
+    if (galleryImages.length > 1) {
+        galleryTimer = setInterval(() => {
+            showGallerySlide(currentGalleryIndex + 1);
+        }, 3000);
+    }
+}
+    
 /* =====================================================
    GET TOUR FROM URL
 ===================================================== */
