@@ -994,7 +994,9 @@ const tours = {
 const params = new URLSearchParams(window.location.search);
 
 const tourName = params.get("tour") || "kedarnath";
-
+    
+const isPackageId = tourName.length > 20;
+    
 let tour = tours[tourName] || tours.kedarnath;
 
 let selectedTransport = null;
