@@ -395,10 +395,22 @@ footer p{
 
 <section class="tour-hero">
 
+    <div class="tour-gallery" id="tourGallery">
+
     <img id="tourImage"
          class="tour-image"
          src=""
          alt="Tour">
+
+    <button class="gallery-arrow prev"
+            onclick="changeGallerySlide(-1)">❮</button>
+
+    <button class="gallery-arrow next"
+            onclick="changeGallerySlide(1)">❯</button>
+
+    <div class="gallery-dots" id="galleryDots"></div>
+
+  </div>
 
     <div class="tour-info">
 
