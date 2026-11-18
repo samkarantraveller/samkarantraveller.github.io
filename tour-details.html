@@ -1009,7 +1009,7 @@ document.getElementById("tourTitle").textContent =
     tour.title;
 
 document.getElementById("tourImage").src =
-    tour.image;
+    tour.image || tour.cover_image_url || "";
 
 document.getElementById("tourDuration").textContent =
     "⏱ " + tour.duration;
