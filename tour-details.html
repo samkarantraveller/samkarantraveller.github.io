@@ -1009,19 +1009,22 @@ document.getElementById("tourTitle").textContent =
     tour.title;
 
 document.getElementById("tourImage").src =
-    tour.image || tour.cover_image_url || "";
+    tour.image ||
+    tour.cover_image_url || "";
 
 document.getElementById("tourDuration").textContent =
-    "⏱ " + tour.duration;
+    "⏱ " + (tour.duration ||
+    `${tour.duration_days} Days / ${tour.duration_nights} Nights`);
 
 document.getElementById("tourRoute").textContent =
-    "📍 " + tour.route;
+    "📍 " + (tour.route ||
+    tour.destination || "Uttarakhand");
 
 document.getElementById("tourPrice").textContent =
-    tour.price.toLocaleString("en-IN");
+    Number(tour.price || 0).toLocaleString("en-IN");
 
 document.getElementById("summaryTourPrice").textContent =
-    tour.price.toLocaleString("en-IN");
+    Number(tour.price || 0).toLocaleString("en-IN");
 
 
 /* =====================================================
