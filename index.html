@@ -2170,7 +2170,7 @@ if (uttarakhandContainer) {
                 <h4>${pkg.title || "Travel Package"}</h4>
                 <p>${pkg.duration_days} Days / ${pkg.duration_nights} Nights</p>
                 <strong>₹${Number(pkg.price || 0).toLocaleString("en-IN")}</strong>
-                <a target="_blank" href="https://wa.me/917895612495?text=${encodeURIComponent("Hello SamKaranTraveller, I am interested in " + pkg.title)}">Book Now</a>
+                <a href="tour-details.html?tour=${encodeURIComponent(pkg.id)}">Book Now</a>
             </div>
         `).join("")
         : "<p>No Uttarakhand packages available.</p>";
