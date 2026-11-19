@@ -558,6 +558,15 @@ footer p{
 
 .hotel-card {
     border-left: 4px solid #056041;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.hotel-card.active {
+    border-left: 6px solid #F88214;
+    transform: scale(1.02);
+    box-shadow: 0 10px 28px rgba(6,43,99,0.16);
+    background: #FFFFFF;
 }
 
 .hotel-location {
