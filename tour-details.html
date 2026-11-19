@@ -1666,11 +1666,30 @@ bookingVehicle.innerHTML =
     bookingVehicle.appendChild(option);
 });
 
+
+bookingVehicle.addEventListener("change", function() {
+
+    const vehicles =
+        tour.transport_details?.vehicles ||
+        tour.transport || [];
+
+    const selectedIndex = vehicles.findIndex(vehicle =>
+        (vehicle.name || "") === bookingVehicle.value
+    );
+
+    if (selectedIndex !== -1) {
+        selectVehicle(selectedIndex);
+    }
+
+});
+
 /* Default vehicle */
 
 selectedTransport =
     (tour.transport_details?.vehicles ||
      tour.transport || [])[0] || null;
+
+bookingVehicle.selectedIndex = selectedTransport ? 1 : 0;
 
 updateSummary();
 
@@ -1743,10 +1762,23 @@ function updateSummary(){
     document.getElementById("totalPrice").textContent =
         total.toLocaleString("en-IN");
 
+    document.getElementById("bookingEstimatedTotal").textContent =
+    total.toLocaleString("en-IN");
+    
+const bookingDate =
+    document.getElementById("bookingDate");
+
+if (bookingDate.value) {
+    selectedDate = bookingDate.value;
+}
     document.getElementById("selectedDate").textContent =
         selectedDate;
 }
 
+document.getElementById("bookingDate").addEventListener("change", function() {
+    selectedDate = this.value;
+    updateSummary();
+});
 
 /* =====================================================
    TOUR INQUIRY SUBMISSION
