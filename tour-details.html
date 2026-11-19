@@ -1521,6 +1521,41 @@ async function loadManagementPackage() {
         document.getElementById("tourOverview").textContent =
             tour.overview || tour.short_description || "Tour details coming soon.";
 
+        /* ================= LOAD HOTEL DETAILS ================= */
+
+   const hotelDetailsGrid =
+          document.getElementById("hotelDetailsGrid");
+
+     hotelDetailsGrid.innerHTML = "";
+
+if (!tour.hotel_details || tour.hotel_details.length === 0) {
+    hotelDetailsGrid.innerHTML =
+        "<p>Hotel details are not available for this package.</p>";
+}
+
+     (tour.hotel_details || []).forEach(hotel => {
+
+    hotelDetailsGrid.innerHTML += `
+        <div class="day">
+            <h3>${hotel.name || hotel.hotel_name || "Hotel"}</h3>
+
+            <p><strong>Location:</strong> ${hotel.location || ""}</p>
+
+            <p><strong>Category:</strong> ${hotel.category || ""}</p>
+
+            <p><strong>Room Type:</strong> ${hotel.room_type || ""}</p>
+
+            <p><strong>Nights:</strong> ${hotel.nights || ""}</p>
+
+            <p>${hotel.description || ""}</p>
+
+            <p><strong>Amenities:</strong>
+                ${(hotel.amenities || []).join(", ")}
+            </p>
+        </div>
+    `;
+});
+        
         const activitiesGrid =
     document.getElementById("activitiesGrid");
 
