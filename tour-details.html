@@ -438,58 +438,66 @@ footer p{
 }
 
 
-/* ================= PREMIUM POLICY DESIGN ================= */
+
+/* ================= SAMKARAN PREMIUM POLICY ================= */
 
 .premium-policy {
-    background: #F7F5F0;
-    border: 1px solid #D8B77A;
+    width: calc(100% - 32px);
+    max-width: 1050px;
+    margin: 30px auto;
     padding: 0;
+    background: #FFFFFF;
+    border: 1px solid #E2E7ED;
+    border-radius: 16px;
     overflow: hidden;
+    box-shadow: 0 12px 35px rgba(6,43,99,0.12);
 }
 
 .premium-policy-header {
-    background: #102C46;
+    background: #062B63;
     color: #FFFFFF;
     text-align: center;
-    padding: 28px 20px;
+    padding: 26px 20px;
+    border-bottom: 4px solid #F88214;
 }
 
 .premium-policy-header h2 {
-    color: #D8B77A;
+    color: #FFFFFF;
     border: none;
     padding: 0;
     margin-bottom: 10px;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
 }
 
 .premium-policy-header p {
-    color: #E5EAF0;
+    color: #E5ECF5;
 }
 
 .policy-content {
-    padding: 28px;
+    padding: 30px;
 }
 
 .policy-content h3 {
-    color: #102C46;
-    border-bottom: 2px solid #D8B77A;
+    color: #062B63;
+    border-bottom: 2px solid #F88214;
     padding-bottom: 10px;
     margin: 22px 0 16px;
 }
 
 .policy-table {
-    border: 1px solid #D8D2C5;
-    border-radius: 8px;
+    border: 1px solid #DCE3EB;
+    border-radius: 9px;
     overflow: hidden;
 }
 
 .policy-row {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 15px;
     padding: 15px;
     background: #FFFFFF;
-    border-bottom: 1px solid #E8E2D6;
+    border-bottom: 1px solid #E8EDF2;
 }
 
 .policy-row:last-child {
@@ -497,68 +505,87 @@ footer p{
 }
 
 .policy-row strong {
-    color: #263D36;
+    color: #056041;
     white-space: nowrap;
 }
 
 .policy-heading {
-    background: #102C46;
-    color: #D8B77A;
+    background: #062B63;
+    color: #FFFFFF;
     font-weight: bold;
+}
+
+.policy-heading strong {
+    color: #FFFFFF;
 }
 
 .policy-list {
     padding-left: 22px;
-    color: #263D36;
+    color: #34445A;
     line-height: 1.9;
 }
 
 .policy-remarks {
-    background: #FFFFFF;
-    border-left: 4px solid #D8B77A;
+    background: #F3F8F5;
+    border-left: 4px solid #F88214;
     padding: 18px;
-    border-radius: 6px;
-    color: #263D36;
+    border-radius: 7px;
+    color: #34445A;
     line-height: 1.8;
 }
 
 @media(max-width:600px) {
+    .premium-policy {
+        width: calc(100% - 24px);
+        margin: 20px auto;
+    }
+
     .policy-content {
         padding: 18px;
+    }
+
+    .premium-policy-header {
+        padding: 23px 15px;
     }
 
     .policy-row {
         padding: 12px 10px;
         font-size: 13px;
     }
-} 
- 
-/* ================= PREMIUM BOOKING DESIGN ================= */
+}
+
+/* ================= SAMKARAN PREMIUM BOOKING ================= */
 
 .premium-booking {
-    background: #F7F5F0;
-    border: 1px solid #D8B77A;
+    width: calc(100% - 32px);
+    max-width: 1050px;
+    margin: 30px auto;
     padding: 0;
+    background: #FFFFFF;
+    border: 1px solid #E2E7ED;
+    border-radius: 16px;
     overflow: hidden;
+    box-shadow: 0 12px 35px rgba(6,43,99,0.12);
 }
 
 .premium-booking-header {
-    background: #102C46;
-    color: white;
-    padding: 30px;
+    background: #062B63;
+    color: #FFFFFF;
+    padding: 26px 20px;
     text-align: center;
+    border-bottom: 4px solid #F88214;
 }
 
 .premium-booking-header h2 {
-    color: #D8B77A;
-    letter-spacing: 2px;
+    color: #FFFFFF;
+    letter-spacing: 1.5px;
     border: none;
     padding: 0;
     margin-bottom: 10px;
 }
 
 .premium-booking-header p {
-    color: #E5EAF0;
+    color: #E5ECF5;
 }
 
 .booking-form {
@@ -566,15 +593,15 @@ footer p{
 }
 
 .booking-form h3 {
-    color: #102C46;
-    border-bottom: 2px solid #D8B77A;
+    color: #062B63;
+    border-bottom: 2px solid #F88214;
     padding-bottom: 10px;
     margin: 25px 0 18px;
 }
 
 .booking-form label {
     display: block;
-    color: #263D36;
+    color: #056041;
     font-weight: bold;
     margin: 14px 0 7px;
 }
@@ -584,19 +611,20 @@ footer p{
 .booking-form textarea {
     width: 100%;
     padding: 13px;
-    border: 1px solid #D8D2C5;
-    border-radius: 7px;
-    background: white;
+    border: 1px solid #DCE3EB;
+    border-radius: 8px;
+    background: #FFFFFF;
     font-size: 15px;
     margin-bottom: 10px;
+    box-sizing: border-box;
 }
 
 .booking-form input:focus,
 .booking-form select:focus,
 .booking-form textarea:focus {
     outline: none;
-    border-color: #D8B77A;
-    box-shadow: 0 0 0 3px rgba(216,183,122,.15);
+    border-color: #056041;
+    box-shadow: 0 0 0 3px rgba(5,96,65,0.10);
 }
 
 .booking-form textarea {
@@ -611,18 +639,19 @@ footer p{
 }
 
 .booking-total {
-    background: #102C46;
-    color: white;
+    background: #062B63;
+    color: #FFFFFF;
     padding: 20px;
     border-radius: 9px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
+    border-left: 4px solid #F88214;
 }
 
 .booking-total strong {
-    color: #D8B77A;
+    color: #FFFFFF;
     font-size: 25px;
 }
 
@@ -632,24 +661,34 @@ footer p{
     margin-top: 20px;
     border: none;
     border-radius: 8px;
-    background: #D8B77A;
-    color: #102C46;
+    background: #F88214;
+    color: #FFFFFF;
     font-size: 17px;
     font-weight: bold;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .premium-inquiry-btn:hover {
-    background: #C6A15E;
+    background: #056041;
 }
 
 @media(max-width:600px) {
+    .premium-booking {
+        width: calc(100% - 24px);
+        margin: 20px auto;
+    }
+
     .booking-form {
-        padding: 20px;
+        padding: 18px;
     }
 
     .premium-booking-header {
-        padding: 24px 15px;
+        padding: 23px 15px;
+    }
+
+    .booking-people {
+        gap: 10px;
     }
 }
     
