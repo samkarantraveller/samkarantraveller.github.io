@@ -437,7 +437,122 @@ footer p{
     }
 }
 
+/* ================= SAMKARAN PREMIUM HOTEL TIMELINE ================= */
 
+.hotels-tour-section {
+    width: calc(100% - 32px);
+    max-width: 1050px;
+    margin: 45px auto;
+    padding: 0;
+}
+
+.hotels-section-heading {
+    border-left: 4px solid #F88214;
+    padding-left: 16px;
+    margin-bottom: 30px;
+}
+
+.hotels-section-heading h2 {
+    color: #062B63;
+    font-size: 25px;
+    margin: 0 0 8px;
+    border: none;
+    padding: 0;
+}
+
+.hotels-section-heading p {
+    color: #667085;
+    margin: 0;
+}
+
+.hotel-timeline {
+    position: relative;
+    padding-left: 32px;
+    counter-reset: hotel-counter;
+}
+
+.hotel-timeline::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: #DCE3EB;
+}
+
+.hotel-timeline .day {
+    position: relative;
+    counter-increment: hotel-counter;
+    background: #FFFFFF;
+    border: 1px solid #E1E7EE;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 14px rgba(6,43,99,0.07);
+}
+
+.hotel-timeline .day::before {
+    content: counter(hotel-counter);
+    position: absolute;
+    left: -43px;
+    top: 18px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #062B63;
+    color: #FFFFFF;
+    border: 3px solid #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(6,43,99,0.2);
+}
+
+.hotel-timeline .day h3 {
+    color: #062B63;
+    margin: 8px 0 12px;
+}
+
+.hotel-timeline .day p {
+    color: #526174;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 7px 0;
+}
+
+.hotel-important-note {
+    background: #F3F6FA;
+    border: 1px solid #E1E7EE;
+    border-left: 4px solid #F88214;
+    border-radius: 9px;
+    padding: 18px;
+    margin-top: 30px;
+    color: #526174;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.hotel-important-note strong {
+    color: #062B63;
+}
+
+@media(max-width:600px) {
+    .hotels-tour-section {
+        width: calc(100% - 24px);
+        margin: 30px auto;
+    }
+
+    .hotels-section-heading h2 {
+        font-size: 21px;
+    }
+
+    .hotel-timeline .day {
+        padding: 14px;
+    }
+}
 
 /* ================= SAMKARAN PREMIUM POLICY ================= */
 
@@ -850,14 +965,25 @@ footer p{
 
 </section>
 
-<!-- ================= HOTEL DETAILS ================= -->
 
-<section class="card">
+<!-- ================= PREMIUM HOTELS OF YOUR TOURS ================= -->
 
-    <h2>🏨 Hotel Details</h2>
+<section class="hotels-tour-section">
 
-    <div id="hotelDetailsGrid">
+    <div class="hotels-section-heading">
+        <h2>Hotels of Your Tours</h2>
+        <p>Best facilities with no added cost throughout your journey.</p>
+    </div>
+
+    <div id="hotelDetailsGrid" class="hotel-timeline">
         <p>Hotel details loading...</p>
+    </div>
+
+    <div class="hotel-important-note">
+        <strong>Important Note:</strong>
+        Under unavoidable circumstances, hotels are subject to change.
+        In such cases, a substitute hotel of similar category will be
+        provided to ensure your comfort level is maintained.
     </div>
 
 </section>
@@ -2007,40 +2133,86 @@ async function loadManagementPackage() {
         document.getElementById("tourOverview").textContent =
             tour.overview || tour.short_description || "Tour details coming soon.";
 
-        /* ================= LOAD HOTEL DETAILS ================= */
+        /* ================= LOAD PREMIUM HOTEL DETAILS ================= */
 
-   const hotelDetailsGrid =
-          document.getElementById("hotelDetailsGrid");
+const hotelDetailsGrid =
+    document.getElementById("hotelDetailsGrid");
 
-     hotelDetailsGrid.innerHTML = "";
+hotelDetailsGrid.innerHTML = "";
 
 if (!tour.hotel_details || tour.hotel_details.length === 0) {
+
     hotelDetailsGrid.innerHTML =
         "<p>Hotel details are not available for this package.</p>";
+
+} else {
+
+    tour.hotel_details.forEach(hotel => {
+
+        const experiences = Array.isArray(hotel.experiences)
+            ? hotel.experiences
+            : [];
+
+        const meals = Array.isArray(hotel.included_meals)
+            ? hotel.included_meals
+            : (Array.isArray(hotel.meals) ? hotel.meals : []);
+
+        const amenities = Array.isArray(hotel.amenities)
+            ? hotel.amenities
+            : [];
+
+        hotelDetailsGrid.innerHTML += `
+
+            <div class="day hotel-card">
+
+                <div class="hotel-location">
+                    📍 ${hotel.location || "Location"}
+                </div>
+
+                <h3>🏨 ${hotel.name || hotel.hotel_name || "Hotel"}</h3>
+
+                <p><strong>Category:</strong>
+                    ${hotel.category || "Not specified"}
+                </p>
+
+                <p><strong>Room Type:</strong>
+                    ${hotel.room_type || "Not specified"}
+                </p>
+
+                <p><strong>Stay:</strong>
+                    ${hotel.nights || 0} Nights
+                </p>
+
+                <p>${hotel.description || ""}</p>
+
+                ${experiences.length ? `
+                    <div class="hotel-tags">
+                        <strong>Experiences:</strong>
+                        ${experiences.map(item =>
+                            `<span>${item}</span>`
+                        ).join("")}
+                    </div>
+                ` : ""}
+
+                ${meals.length ? `
+                    <div class="hotel-meals">
+                        <strong>Included Meals:</strong>
+                        ${meals.map(meal =>
+                            `<span>✓ ${meal}</span>`
+                        ).join("")}
+                    </div>
+                ` : ""}
+
+                ${amenities.length ? `
+                    <p><strong>Amenities:</strong>
+                        ${amenities.join(", ")}
+                    </p>
+                ` : ""}
+
+            </div>
+        `;
+    });
 }
-
-     (tour.hotel_details || []).forEach(hotel => {
-
-    hotelDetailsGrid.innerHTML += `
-        <div class="day">
-            <h3>${hotel.name || hotel.hotel_name || "Hotel"}</h3>
-
-            <p><strong>Location:</strong> ${hotel.location || ""}</p>
-
-            <p><strong>Category:</strong> ${hotel.category || ""}</p>
-
-            <p><strong>Room Type:</strong> ${hotel.room_type || ""}</p>
-
-            <p><strong>Nights:</strong> ${hotel.nights || ""}</p>
-
-            <p>${hotel.description || ""}</p>
-
-            <p><strong>Amenities:</strong>
-                ${(hotel.amenities || []).join(", ")}
-            </p>
-        </div>
-    `;
-});
         
         const activitiesGrid =
     document.getElementById("activitiesGrid");
