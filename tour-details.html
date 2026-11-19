@@ -2208,7 +2208,9 @@ if (!tour.hotel_details || tour.hotel_details.length === 0) {
 
         hotelDetailsGrid.innerHTML += `
 
-            <div class="day hotel-card">
+           <div class="day hotel-card"
+            
+              onclick="this.classList.toggle('active')">
 
                 <div class="hotel-location">
                     📍 ${hotel.location || "Location"}
