@@ -436,6 +436,223 @@ footer p{
         grid-template-columns:1fr;
     }
 }
+
+
+/* ================= PREMIUM POLICY DESIGN ================= */
+
+.premium-policy {
+    background: #F7F5F0;
+    border: 1px solid #D8B77A;
+    padding: 0;
+    overflow: hidden;
+}
+
+.premium-policy-header {
+    background: #102C46;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 28px 20px;
+}
+
+.premium-policy-header h2 {
+    color: #D8B77A;
+    border: none;
+    padding: 0;
+    margin-bottom: 10px;
+    letter-spacing: 1.5px;
+}
+
+.premium-policy-header p {
+    color: #E5EAF0;
+}
+
+.policy-content {
+    padding: 28px;
+}
+
+.policy-content h3 {
+    color: #102C46;
+    border-bottom: 2px solid #D8B77A;
+    padding-bottom: 10px;
+    margin: 22px 0 16px;
+}
+
+.policy-table {
+    border: 1px solid #D8D2C5;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.policy-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 15px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E8E2D6;
+}
+
+.policy-row:last-child {
+    border-bottom: none;
+}
+
+.policy-row strong {
+    color: #263D36;
+    white-space: nowrap;
+}
+
+.policy-heading {
+    background: #102C46;
+    color: #D8B77A;
+    font-weight: bold;
+}
+
+.policy-list {
+    padding-left: 22px;
+    color: #263D36;
+    line-height: 1.9;
+}
+
+.policy-remarks {
+    background: #FFFFFF;
+    border-left: 4px solid #D8B77A;
+    padding: 18px;
+    border-radius: 6px;
+    color: #263D36;
+    line-height: 1.8;
+}
+
+@media(max-width:600px) {
+    .policy-content {
+        padding: 18px;
+    }
+
+    .policy-row {
+        padding: 12px 10px;
+        font-size: 13px;
+    }
+} 
+ 
+/* ================= PREMIUM BOOKING DESIGN ================= */
+
+.premium-booking {
+    background: #F7F5F0;
+    border: 1px solid #D8B77A;
+    padding: 0;
+    overflow: hidden;
+}
+
+.premium-booking-header {
+    background: #102C46;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.premium-booking-header h2 {
+    color: #D8B77A;
+    letter-spacing: 2px;
+    border: none;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.premium-booking-header p {
+    color: #E5EAF0;
+}
+
+.booking-form {
+    padding: 30px;
+}
+
+.booking-form h3 {
+    color: #102C46;
+    border-bottom: 2px solid #D8B77A;
+    padding-bottom: 10px;
+    margin: 25px 0 18px;
+}
+
+.booking-form label {
+    display: block;
+    color: #263D36;
+    font-weight: bold;
+    margin: 14px 0 7px;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #D8D2C5;
+    border-radius: 7px;
+    background: white;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+    outline: none;
+    border-color: #D8B77A;
+    box-shadow: 0 0 0 3px rgba(216,183,122,.15);
+}
+
+.booking-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.booking-people {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.booking-total {
+    background: #102C46;
+    color: white;
+    padding: 20px;
+    border-radius: 9px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.booking-total strong {
+    color: #D8B77A;
+    font-size: 25px;
+}
+
+.premium-inquiry-btn {
+    width: 100%;
+    padding: 16px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    background: #D8B77A;
+    color: #102C46;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.premium-inquiry-btn:hover {
+    background: #C6A15E;
+}
+
+@media(max-width:600px) {
+    .booking-form {
+        padding: 20px;
+    }
+
+    .premium-booking-header {
+        padding: 24px 15px;
+    }
+}
+    
 </style>
 </head>
 
@@ -746,6 +963,68 @@ Transportation price is for the complete vehicle.
 </div>
 
 </main>
+
+
+<!-- ================= CANCELLATION POLICY & PAYMENT TERMS ================= -->
+
+<section class="card premium-policy">
+
+    <div class="premium-policy-header">
+        <h2>Cancellation Policy & Payment Terms</h2>
+        <p>Important information before confirming your journey</p>
+    </div>
+
+    <div class="policy-content">
+
+        <h3>Cancellation Charges</h3>
+
+        <div class="policy-table">
+            <div class="policy-row policy-heading">
+                <span>Cancellation Period</span>
+                <span>Cancellation Charges</span>
+            </div>
+
+            <div class="policy-row">
+                <span>30 days or more before departure</span>
+                <strong>10%</strong>
+            </div>
+
+            <div class="policy-row">
+                <span>15–29 days before departure</span>
+                <strong>25%</strong>
+            </div>
+
+            <div class="policy-row">
+                <span>7–14 days before departure</span>
+                <strong>50%</strong>
+            </div>
+
+            <div class="policy-row">
+                <span>Less than 7 days before departure</span>
+                <strong>100%</strong>
+            </div>
+        </div>
+
+        <h3>Payment Terms</h3>
+
+        <ul class="policy-list">
+            <li>Booking confirmation is subject to advance payment.</li>
+            <li>Remaining payment must be cleared before departure.</li>
+            <li>All payments must be made through authorised payment methods.</li>
+        </ul>
+
+        <h3>Important Remarks</h3>
+
+        <p class="policy-remarks">
+            Cancellation charges are calculated on the total package amount.
+            Refunds, if applicable, are processed after deducting applicable
+            cancellation charges and non-refundable expenses.
+            Any special conditions will be communicated at the time of booking.
+        </p>
+
+    </div>
+
+</section>
 
 
 <!-- ================= PREMIUM TOUR INQUIRY & BOOKING ================= -->
@@ -1365,6 +1644,28 @@ activitiesGrid.innerHTML = "";
     `;
 });
 
+
+/* ================= BOOKING VEHICLE DROPDOWN ================= */
+
+const bookingVehicle =
+    document.getElementById("bookingVehicle");
+
+bookingVehicle.innerHTML =
+    '<option value="">Select Vehicle</option>';
+
+(tour.transport_details?.vehicles ||
+ tour.transport || []).forEach((vehicle, index) => {
+
+    const option = document.createElement("option");
+
+    option.value = vehicle.name || `Vehicle ${index + 1}`;
+
+    option.textContent =
+        `${vehicle.name || "Vehicle"} - ₹${Number(vehicle.price || 0).toLocaleString("en-IN")}`;
+
+    bookingVehicle.appendChild(option);
+});
+
 /* Default vehicle */
 
 selectedTransport =
@@ -1446,6 +1747,52 @@ function updateSummary(){
         selectedDate;
 }
 
+
+/* =====================================================
+   TOUR INQUIRY SUBMISSION
+===================================================== */
+
+function submitTourInquiry() {
+
+    const name = document.getElementById("travellerName").value.trim();
+    const email = document.getElementById("travellerEmail").value.trim();
+    const mobile = document.getElementById("travellerMobile").value.trim();
+    const vehicle = document.getElementById("bookingVehicle").value;
+    const occupancy = document.getElementById("roomOccupancy").value;
+    const date = document.getElementById("bookingDate").value;
+    const adults = document.getElementById("bookingAdults").value;
+    const kids = document.getElementById("bookingKids").value;
+    const notes = document.getElementById("customerNotes").value.trim();
+
+    if (!name || !mobile || !date) {
+        alert("Please enter your name, mobile number and travel date.");
+        return;
+    }
+
+    const message =
+`SamKaranTraveller - New Tour Inquiry
+
+Tour: ${tour.title}
+Name: ${name}
+Email: ${email || "Not provided"}
+Mobile: ${mobile}
+Travel Date: ${date}
+Vehicle: ${vehicle || "Not selected"}
+Room Occupancy: ${occupancy}
+Adults: ${adults}
+Kids: ${kids}
+Customer Notes: ${notes || "None"}
+
+Please contact me regarding this tour.`;
+
+    const whatsappNumber = "918266975481";
+
+    const whatsappURL =
+        "https://wa.me/" + whatsappNumber +
+        "?text=" + encodeURIComponent(message);
+
+    window.open(whatsappURL, "_blank");
+}
 
 /* =====================================================
    BOOK NOW
