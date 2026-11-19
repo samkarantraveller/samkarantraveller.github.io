@@ -748,6 +748,74 @@ Transportation price is for the complete vehicle.
 </main>
 
 
+<!-- ================= PREMIUM TOUR INQUIRY & BOOKING ================= -->
+
+<section class="card premium-booking">
+
+    <div class="premium-booking-header">
+        <h2>TOUR INQUIRY & BOOKING</h2>
+        <p>Plan your journey with SamKaranTraveller</p>
+    </div>
+
+    <div class="booking-form">
+
+        <h3>1. VEHICLE & OCCUPANCY</h3>
+
+        <label>Preferred Vehicle</label>
+        <select id="bookingVehicle">
+            <option value="">Select Vehicle</option>
+        </select>
+
+        <label>Room Occupancy</label>
+        <select id="roomOccupancy">
+            <option>Double Occupancy</option>
+            <option>Single Occupancy</option>
+            <option>Triple Occupancy</option>
+        </select>
+
+        <h3>2. DEPARTURE DATE</h3>
+
+        <label>Travel Date</label>
+        <input type="date" id="bookingDate">
+
+        <h3>3. TRAVELLER INFORMATION</h3>
+
+        <input type="text" id="travellerName" placeholder="Traveller Name">
+
+        <input type="email" id="travellerEmail" placeholder="Email Address">
+
+        <input type="tel" id="travellerMobile" placeholder="Mobile Number">
+
+        <div class="booking-people">
+            <div>
+                <label>Adults</label>
+                <input type="number" id="bookingAdults" min="1" value="1">
+            </div>
+
+            <div>
+                <label>Kids</label>
+                <input type="number" id="bookingKids" min="0" value="0">
+            </div>
+        </div>
+
+        <h3>4. ADDITIONAL INFORMATION</h3>
+
+        <textarea id="customerNotes" placeholder="Customer Notes"></textarea>
+
+        <div class="booking-total">
+            <span>ESTIMATED TOTAL</span>
+            <strong>₹<span id="bookingEstimatedTotal">0</span></strong>
+        </div>
+
+        <button type="button" class="premium-inquiry-btn" onclick="submitTourInquiry()">
+            Send Inquiry →
+        </button>
+
+    </div>
+
+</section>
+    
+
 <!-- ================= FOOTER ================= -->
 
 <footer>
