@@ -2157,6 +2157,33 @@ document.addEventListener("click", function(event) {
 
 });
 
+/* ================= TOUR INFORMATION TABS ================= */
+
+function showTourInfoTab(tab) {
+
+    const included = document.getElementById("included");
+    const excluded = document.getElementById("excluded");
+
+    const tabs = document.querySelectorAll(".tour-tab");
+
+    if (tab === "included") {
+
+        included.style.display = "block";
+        excluded.style.display = "none";
+
+        tabs[0].classList.add("active");
+        tabs[1].classList.remove("active");
+
+    } else {
+
+        included.style.display = "none";
+        excluded.style.display = "block";
+
+        tabs[0].classList.remove("active");
+        tabs[1].classList.add("active");
+    }
+}
+
 /* =====================================================
    LOAD PACKAGE FROM MANAGEMENT SYSTEM
 ===================================================== */
