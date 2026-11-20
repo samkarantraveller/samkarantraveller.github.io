@@ -1279,37 +1279,45 @@ Select your preferred vehicle. Transportation price is separate from the tour pa
 
 </div>
 
-<!-- ================= RIGHT SUMMARY ================= -->  <aside>  <section class="card summary">  <h2>Booking Summary</h2>  <div class="summary-row">  <span>Tour Package</span>
+<!-- ================= FULL WIDTH BOOKING SUMMARY ================= -->
 
-<strong>  
-₹<span id="summaryTourPrice">0</span>  
-</strong>  </div>  <div class="summary-row">  <span>Persons</span>
+<section class="card summary summary-full">
 
-<strong>  
-<span id="persons">1</span>  
-</strong>  </div>  <div class="summary-row">  <span>Transportation</span>
+    <h2>Booking Summary</h2>
 
-<strong>  
-₹<span id="transportPrice">0</span>  
-</strong>  </div>  <div class="summary-row">  <span>Departure</span>
+    <div class="summary-row">
+        <span>Tour Package</span>
+        <strong>₹<span id="summaryTourPrice">0</span></strong>
+    </div>
 
-<strong id="selectedDate">  
-05 Sep 2026  
-</strong>  </div>  <div class="summary-total">  Total: ₹<span id="totalPrice">0</span>
+    <div class="summary-row">
+        <span>Persons</span>
+        <strong><span id="persons">1</span></strong>
+    </div>
 
-</div>  <button class="book-btn"  
-onclick="bookNow()">
+    <div class="summary-row">
+        <span>Transportation</span>
+        <strong>₹<span id="transportPrice">0</span></strong>
+    </div>
 
-Book Now
+    <div class="summary-row">
+        <span>Departure</span>
+        <strong id="selectedDate">05 Sep 2026</strong>
+    </div>
 
-</button>  <p style="text-align:center;margin-top:12px;color:#777;font-size:13px;">  
-Transportation price is for the complete vehicle.  
-</p>  </section>  </aside>  </div>  </main>
-    
-</div>
+    <div class="summary-total">
+        Total: ₹<span id="totalPrice">0</span>
+    </div>
 
-</main>
+    <button class="book-btn" onclick="bookNow()">
+        Book Now
+    </button>
 
+    <p style="text-align:center;margin-top:12px;color:#777;font-size:13px;">
+        Transportation price is for the complete vehicle.
+    </p>
+
+</section>
 
 <!-- ================= CANCELLATION POLICY & PAYMENT TERMS ================= -->
 
