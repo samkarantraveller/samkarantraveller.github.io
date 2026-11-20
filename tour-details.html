@@ -2099,6 +2099,20 @@ function selectHotelCard(selectedCard) {
     selectedCard.classList.add("active");
 }
 
+/* ================= REMOVE HOTEL SELECTION ON OUTSIDE CLICK ================= */
+
+document.addEventListener("click", function(event) {
+
+    if (!event.target.closest(".hotel-card")) {
+
+        document.querySelectorAll(".hotel-card").forEach(card => {
+            card.classList.remove("active");
+        });
+
+    }
+
+});
+
 /* =====================================================
    LOAD PACKAGE FROM MANAGEMENT SYSTEM
 ===================================================== */
