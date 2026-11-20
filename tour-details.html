@@ -232,22 +232,149 @@ a{
     font-weight:bold;
 }
 
-/* ================= ITINERARY ================= */
 
-.day{
-    border-left:3px solid #0A4D68;
-    padding:0 0 20px 20px;
-    margin-bottom:20px;
+/* ================= SAMKARAN DAY WISE ITINERARY ================= */
+
+.day-wise-section {
+    width: 100%;
+    margin: 25px auto;
 }
 
-.day h3{
-    color:#0A4D68;
-    margin-bottom:8px;
+.day-wise-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
 }
 
-.day p{
-    color:#555;
-    line-height:1.6;
+.day-wise-heading h2 {
+    color: #062B63;
+    font-size: 23px;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.day-wise-heading h2::after {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 3px;
+    background: #F88214;
+    margin-top: 9px;
+}
+
+.show-all-btn {
+    background: #FFFFFF;
+    border: 1px solid #062B63;
+    color: #062B63;
+    padding: 9px 15px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.show-all-btn:hover {
+    background: #062B63;
+    color: #FFFFFF;
+}
+
+.day-wise-item {
+    background: #FFFFFF;
+    border: 1px solid #E1E7EE;
+    margin-bottom: 10px;
+    border-radius: 7px;
+    overflow: hidden;
+    box-shadow: 0 2px 7px rgba(0,0,0,0.06);
+}
+
+.day-wise-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px;
+    background: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+.day-wise-title {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: #333;
+    font-size: 14px;
+}
+
+.day-number {
+    font-weight: bold;
+    color: #062B63;
+    white-space: nowrap;
+}
+
+.day-route {
+    color: #626B75;
+}
+
+.day-arrow {
+    color: #526174;
+    font-size: 19px;
+    transition: transform 0.3s ease;
+}
+
+.day-wise-item.active .day-arrow {
+    transform: rotate(180deg);
+}
+
+.day-wise-content {
+    display: none;
+    padding: 5px 16px 18px;
+    border-top: 1px solid #E8EDF2;
+}
+
+.day-wise-item.active .day-wise-content {
+    display: block;
+}
+
+.day-wise-content p {
+    color: #526174;
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 12px 0 0;
+}
+
+.day-wise-content strong {
+    color: #062B63;
+}
+
+@media(max-width:600px) {
+    .day-wise-heading h2 {
+        font-size: 21px;
+    }
+
+    .day-wise-toggle {
+        padding: 14px 12px;
+    }
+
+    .day-wise-title {
+        gap: 8px;
+        font-size: 13px;
+    }
+
+    .day-wise-content {
+        padding: 5px 13px 15px;
+    }
+
+    .show-all-btn {
+        padding: 8px 11px;
+        font-size: 12px;
+    }
 }
 
 /* ================= TRANSPORT ================= */
@@ -1154,18 +1281,29 @@ footer p{
 </div>
 
 
-<!-- ================= ITINERARY ================= -->
+<!-- ================= DAY WISE ITINERARY ================= -->
 
-<section class="card">
+<section class="card itinerary-section">
 
-<h2>🗺️ Tour Itinerary</h2>
+    <h2>🗺️ Itinerary (Day Wise)</h2>
 
-<div id="itinerary"></div>
+    <p class="itinerary-subtitle">
+        Explore your complete journey day by day.
+    </p>
+
+    <div id="itinerary"></div>
+
+    <button
+        type="button"
+        id="showAllDaysBtn"
+        class="show-all-days-btn"
+        onclick="toggleAllDays()">
+
+        Show All Days ↓
+
+    </button>
 
 </section>
-
-</div>
-</div>
 
 
 <!-- ================= PREMIUM HOTELS OF YOUR TOURS ================= -->
@@ -2321,18 +2459,83 @@ async function loadManagementPackage() {
 
         tour = packageData;
 
-        const itineraryBox = document.getElementById("itinerary");
+        
+// ================= DAY WISE ITINERARY =================
 
-          itineraryBox.innerHTML = "";
+function renderDayWiseItinerary(days) {
+    const itineraryBox = document.getElementById("itinerary");
 
-         (tour.itinerary || []).forEach(day => {
-         itineraryBox.innerHTML += `
-           <div class="day">
-            <h3>${day.day || day.title || day[0] || "Tour Day"} — ${day.route || day.location || day[1] || ""}</h3>
-            <p>${day.description || day.details || day[2] || ""}</p>
+    if (!itineraryBox) return;
+
+    itineraryBox.innerHTML = "";
+
+    (days || []).forEach((day, index) => {
+        const title = day.day || day.title || day[0] || "Tour Day";
+        const route = day.route || day.location || day[1] || "";
+        const description = day.description || day.details || day[2] || "";
+
+        itineraryBox.innerHTML += `
+            <div class="day-wise-item ${index === 0 ? "active" : ""}">
+
+                <button
+                    type="button"
+                    class="day-wise-toggle"
+                    aria-expanded="${index === 0}"
+                    onclick="toggleDay(this)">
+
+                    <span class="day-number">DAY ${index + 1}</span>
+                    <span class="day-wise-title">${title}</span>
+                    <span class="day-route">${route}</span>
+                    <span class="day-arrow">⌄</span>
+
+                </button>
+
+                <div class="day-wise-content">
+                    <p>${description}</p>
+                </div>
+
             </div>
         `;
     });
+}
+
+// Open / Close individual day
+function toggleDay(button) {
+    const item = button.closest(".day-wise-item");
+    item.classList.toggle("active");
+
+    button.setAttribute(
+        "aria-expanded",
+        item.classList.contains("active")
+    );
+}
+
+// Show All / Show Less
+function toggleAllDays() {
+    const items = document.querySelectorAll(".day-wise-item");
+    const button = document.getElementById("showAllDaysBtn");
+
+    const allOpen = [...items].every(item =>
+        item.classList.contains("active")
+    );
+
+    items.forEach(item => {
+        item.classList.toggle("active", !allOpen);
+
+        const toggle = item.querySelector(".day-wise-toggle");
+        if (toggle) {
+            toggle.setAttribute("aria-expanded", String(!allOpen));
+        }
+    });
+
+    if (button) {
+        button.textContent = allOpen
+            ? "Show All Days ↓"
+            : "Show Less ↑";
+    }
+}
+    renderDayWiseItinerary(tour.itinerary);
+
      const includedBox = document.getElementById("included");
           includedBox.innerHTML = "";
 
