@@ -2459,82 +2459,7 @@ async function loadManagementPackage() {
 
         tour = packageData;
 
-        
-// ================= DAY WISE ITINERARY =================
-
-function renderDayWiseItinerary(days) {
-    const itineraryBox = document.getElementById("itinerary");
-
-    if (!itineraryBox) return;
-
-    itineraryBox.innerHTML = "";
-
-    (days || []).forEach((day, index) => {
-        const title = day.day || day.title || day[0] || "Tour Day";
-        const route = day.route || day.location || day[1] || "";
-        const description = day.description || day.details || day[2] || "";
-
-        itineraryBox.innerHTML += `
-            <div class="day-wise-item ${index === 0 ? "active" : ""}">
-
-                <button
-                    type="button"
-                    class="day-wise-toggle"
-                    aria-expanded="${index === 0}"
-                    onclick="toggleDay(this)">
-
-                    <span class="day-number">DAY ${index + 1}</span>
-                    <span class="day-wise-title">${title}</span>
-                    <span class="day-route">${route}</span>
-                    <span class="day-arrow">⌄</span>
-
-                </button>
-
-                <div class="day-wise-content">
-                    <p>${description}</p>
-                </div>
-
-            </div>
-        `;
-    });
-}
-
-// Open / Close individual day
-function toggleDay(button) {
-    const item = button.closest(".day-wise-item");
-    item.classList.toggle("active");
-
-    button.setAttribute(
-        "aria-expanded",
-        item.classList.contains("active")
-    );
-}
-
-// Show All / Show Less
-function toggleAllDays() {
-    const items = document.querySelectorAll(".day-wise-item");
-    const button = document.getElementById("showAllDaysBtn");
-
-    const allOpen = [...items].every(item =>
-        item.classList.contains("active")
-    );
-
-    items.forEach(item => {
-        item.classList.toggle("active", !allOpen);
-
-        const toggle = item.querySelector(".day-wise-toggle");
-        if (toggle) {
-            toggle.setAttribute("aria-expanded", String(!allOpen));
-        }
-    });
-
-    if (button) {
-        button.textContent = allOpen
-            ? "Show All Days ↓"
-            : "Show Less ↑";
-    }
-}
-    renderDayWiseItinerary(tour.itinerary);
+   renderDayWiseItinerary(tour.itinerary);
 
      const includedBox = document.getElementById("included");
           includedBox.innerHTML = "";
@@ -2739,7 +2664,82 @@ updateSummary();
     }
 
 }
+    
+// ================= DAY WISE ITINERARY =================
 
+function renderDayWiseItinerary(days) {
+    const itineraryBox = document.getElementById("itinerary");
+
+    if (!itineraryBox) return;
+
+    itineraryBox.innerHTML = "";
+
+    (days || []).forEach((day, index) => {
+        const title = day.day || day.title || day[0] || "Tour Day";
+        const route = day.route || day.location || day[1] || "";
+        const description = day.description || day.details || day[2] || "";
+
+        itineraryBox.innerHTML += `
+            <div class="day-wise-item ${index === 0 ? "active" : ""}">
+
+                <button
+                    type="button"
+                    class="day-wise-toggle"
+                    aria-expanded="${index === 0}"
+                    onclick="toggleDay(this)">
+
+                    <span class="day-number">DAY ${index + 1}</span>
+                    <span class="day-wise-title">${title}</span>
+                    <span class="day-route">${route}</span>
+                    <span class="day-arrow">⌄</span>
+
+                </button>
+
+                <div class="day-wise-content">
+                    <p>${description}</p>
+                </div>
+
+            </div>
+        `;
+    });
+}
+
+// Open / Close individual day
+function toggleDay(button) {
+    const item = button.closest(".day-wise-item");
+    item.classList.toggle("active");
+
+    button.setAttribute(
+        "aria-expanded",
+        item.classList.contains("active")
+    );
+}
+
+// Show All / Show Less
+function toggleAllDays() {
+    const items = document.querySelectorAll(".day-wise-item");
+    const button = document.getElementById("showAllDaysBtn");
+
+    const allOpen = [...items].every(item =>
+        item.classList.contains("active")
+    );
+
+    items.forEach(item => {
+        item.classList.toggle("active", !allOpen);
+
+        const toggle = item.querySelector(".day-wise-toggle");
+        if (toggle) {
+            toggle.setAttribute("aria-expanded", String(!allOpen));
+        }
+    });
+
+    if (button) {
+        button.textContent = allOpen
+            ? "Show All Days ↓"
+            : "Show Less ↑";
+    }
+}
+    
 loadManagementPackage();
     
 </script>
