@@ -860,7 +860,139 @@ footer p{
         gap: 10px;
     }
 }
-    
+
+/* ================= SAMKARAN PREMIUM TOUR INFORMATION ================= */
+
+.tour-information {
+    width: calc(100% - 32px);
+    max-width: 1050px;
+    margin: 35px auto;
+    padding: 25px;
+    background: #FFFFFF;
+    border: 1px solid #E2E7ED;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(6,43,99,0.08);
+    box-sizing: border-box;
+}
+
+.tour-info-heading {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.tour-info-heading h2 {
+    color: #062B63;
+    font-size: 26px;
+    margin-bottom: 8px;
+    border: none;
+    padding: 0;
+}
+
+.tour-info-heading p {
+    color: #667085;
+    font-size: 14px;
+}
+
+.tour-info-tabs {
+    display: flex;
+    gap: 12px;
+    border-bottom: 2px solid #E2E7ED;
+    margin-bottom: 22px;
+}
+
+.tour-tab {
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 13px 18px;
+    color: #526174;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.tour-tab.active {
+    color: #062B63;
+    border-bottom-color: #F88214;
+}
+
+.tour-info-list {
+    padding-left: 25px;
+    color: #34445A;
+    line-height: 2;
+    margin-bottom: 25px;
+}
+
+.tour-info-list li {
+    padding: 5px 0;
+}
+
+.need-to-know {
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid #E2E7ED;
+}
+
+.need-to-know h3 {
+    color: #062B63;
+    font-size: 21px;
+}
+
+.need-to-know > p {
+    color: #667085;
+    font-size: 14px;
+}
+
+.know-card {
+    background: #F5F8FB;
+    border: 1px solid #E2E7ED;
+    border-left: 4px solid #056041;
+    border-radius: 9px;
+    padding: 18px;
+    margin-top: 16px;
+}
+
+.know-card h4 {
+    color: #062B63;
+    margin-top: 0;
+}
+
+.know-card p {
+    color: #526174;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.know-card a {
+    color: #056041;
+    font-weight: 600;
+}
+
+.document-note {
+    border-top: 1px solid #DCE3EB;
+    padding-top: 10px;
+}
+
+@media(max-width:600px) {
+    .tour-information {
+        width: calc(100% - 24px);
+        padding: 17px;
+    }
+
+    .tour-info-heading h2 {
+        font-size: 22px;
+    }
+
+    .tour-tab {
+        padding: 12px 9px;
+        font-size: 12px;
+    }
+
+    .know-card {
+        padding: 14px;
+    }
+}
+
 </style>
 </head>
 
