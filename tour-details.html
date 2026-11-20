@@ -1069,32 +1069,76 @@ Select your preferred vehicle. Transportation price is separate from the tour pa
 </section>
 
 
-<!-- ================= INCLUSIONS ================= -->
+<!-- ================= PREMIUM TOUR INFORMATION ================= -->
 
-<section class="card">
+<section class="card tour-information">
 
-<h2>📋 Inclusions & Exclusions</h2>
+    <div class="tour-info-heading">
+        <h2>Tour Information</h2>
+        <p>Read this to prepare for your tour in the best way!</p>
+    </div>
 
-<div class="inc-grid">
+    <div class="tour-info-tabs">
 
-<div class="included">
+        <button class="tour-tab active"
+                onclick="showTourInfoTab('included')">
+            Tour Inclusions
+        </button>
 
-<h3>Included</h3>
+        <button class="tour-tab"
+                onclick="showTourInfoTab('excluded')">
+            Tour Exclusions
+        </button>
 
-<ul id="included"></ul>
+    </div>
 
-</div>
+    <div class="tour-info-content">
 
+        <ul id="included" class="tour-info-list"></ul>
 
-<div class="excluded">
+        <ul id="excluded" class="tour-info-list"
+            style="display:none;"></ul>
 
-<h3>Not Included</h3>
+    </div>
 
-<ul id="excluded"></ul>
+    <div class="need-to-know">
 
-</div>
+        <h3>ⓘ Need to Know</h3>
+        <p>Things to consider before the trip!</p>
 
-</div>
+        <div class="know-card">
+            <h4>Weather</h4>
+            <p>For detailed information about weather kindly visit</p>
+            <a href="https://www.accuweather.com/"
+               target="_blank">
+                www.accuweather.com
+            </a>
+        </div>
+
+        <div class="know-card">
+            <h4>Documents Required for Travel</h4>
+
+            <p><strong>ADULT:</strong> Voters ID / Passport / Aadhaar Card / Driving Licence</p>
+
+            <p><strong>CHILD:</strong> Passport / Aadhaar Card / School ID</p>
+
+            <p><strong>INFANT:</strong> Aadhaar Card / Birth Certificate</p>
+
+            <p class="document-note">
+                ID card, ID card type and ID card number is mandatory at time of booking. Kindly carry the same ID card on tour.
+            </p>
+
+            <p class="document-note">
+                For NRI and Foreign National Guests, Passport, Valid Indian Visa / OCI Card / PIO Card is mandatory.
+            </p>
+
+            <p class="document-note">
+                Carry two passport size photographs.
+            </p>
+
+        </div>
+
+    </div>
 
 </section>
 
