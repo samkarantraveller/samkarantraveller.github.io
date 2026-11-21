@@ -1275,11 +1275,24 @@ footer p{
 </div>
 
 
+
 <!-- ================= DAY WISE ITINERARY ================= -->
 
 <section class="card itinerary-section">
 
-    <h2>🗺️ Itinerary (Day Wise)</h2>
+    <div class="day-wise-heading">
+
+        <h2>🗺️ Itinerary (Day Wise)</h2>
+
+        <button
+            type="button"
+            id="showAllDaysBtn"
+            class="show-all-days-btn"
+            onclick="toggleAllDays()">
+            Show All
+        </button>
+
+    </div>
 
     <p class="itinerary-subtitle">
         Explore your complete journey day by day.
@@ -1287,18 +1300,8 @@ footer p{
 
     <div id="itinerary"></div>
 
-    <button
-        type="button"
-        id="showAllDaysBtn"
-        class="show-all-days-btn"
-        onclick="toggleAllDays()">
-
-        Show All Days ↓
-
-    </button>
-
 </section>
-
+    
 
 <!-- ================= PREMIUM HOTELS OF YOUR TOURS ================= -->
 
