@@ -2238,17 +2238,23 @@ updateSummary();
 
 function selectVehicle(index){
 
-    selectedTransport =
-    (tour.transport_details?.vehicles || 
-     tour.transport || [])[index];
+    const availableVehicles =
+        (tour.transport_details?.vehicles ||
+         tour.transport || [])
+        .filter(vehicle => vehicle.selected !== false);
+
+    selectedTransport = availableVehicles[index];
 
     document.querySelectorAll(".vehicle").forEach(vehicle => {
         vehicle.classList.remove("selected");
     });
 
-    document
-        .getElementById("vehicle-" + index)
-        .classList.add("selected");
+    const selectedElement =
+        document.getElementById("vehicle-" + index);
+
+    if (selectedElement) {
+        selectedElement.classList.add("selected");
+    }
 
     updateSummary();
 }
