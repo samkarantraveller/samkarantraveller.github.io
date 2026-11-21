@@ -2385,19 +2385,17 @@ Please contact me regarding this tour.`;
 
 function bookNow(){
 
-    const tourPrice = Number(tour.price || 0);
-
-    const transportPrice =
-        selectedTransport
-        ? Number(selectedTransport.price || 0)
-        : 0;
-
-    const total = tourPrice + transportPrice;
-
     if (!selectedTransport) {
     alert("Please select a vehicle before booking.");
     return;
     }
+
+    const tourPrice = Number(tour.price || 0);
+
+    const transportPrice =
+    Number(selectedTransport.price || 0);
+
+    const total = tourPrice + transportPrice;
 
     const vehicleName =
         selectedTransport
