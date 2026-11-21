@@ -373,28 +373,67 @@ a{
 }
 
 
-/* ================= SAMKARAN PREMIUM VEHICLES ================= */
+/* ================= SAMKARAN PREMIUM OUR VEHICLES ================= */
+
+.our-vehicles-section {
+    background: #FFFFFF;
+    border: 1px solid #E5EAF0;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 8px 25px rgba(6,43,99,0.06);
+}
+
+.our-vehicles-heading {
+    margin-bottom: 24px;
+}
+
+.our-vehicles-heading .section-tag {
+    display: block;
+    color: #056041;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.our-vehicles-heading h2 {
+    color: #062B63;
+    font-family: Georgia, serif;
+    font-size: 27px;
+    margin: 0 0 8px;
+}
+
+.our-vehicles-heading p {
+    color: #75808D;
+    font-size: 13px;
+    margin: 0;
+}
 
 .transport-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 4px 2px 14px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
 }
 
 .vehicle {
+    flex: 0 0 190px;
     background: #FFFFFF;
-    border: 1px solid #DCE3EB;
-    border-radius: 14px;
+    border: 1px solid #E2E7ED;
+    border-radius: 15px;
     overflow: hidden;
     cursor: pointer;
+    scroll-snap-align: start;
     transition: all 0.3s ease;
     box-shadow: 0 5px 16px rgba(6,43,99,0.07);
 }
 
 .vehicle:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
     border-color: #056041;
-    box-shadow: 0 10px 25px rgba(6,43,99,0.13);
+    box-shadow: 0 10px 25px rgba(6,43,99,0.12);
 }
 
 .vehicle.selected {
@@ -404,49 +443,45 @@ a{
 
 .vehicle img {
     width: 100%;
-    height: 175px;
+    height: 125px;
     object-fit: cover;
     display: block;
 }
 
 .vehicle-info {
-    padding: 18px;
+    padding: 13px;
 }
 
 .vehicle-info h3 {
     color: #062B63;
-    font-size: 18px;
-    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0 0 9px;
 }
 
 .capacity {
-    color: #526174;
-    font-size: 14px;
-    margin-bottom: 12px;
+    color: #75808D;
+    font-size: 12px;
+    margin-bottom: 9px;
 }
 
 .vehicle-price {
     color: #056041;
-    font-size: 23px;
+    font-size: 19px;
     font-weight: 700;
 }
 
 .select-btn {
     display: block;
     width: 100%;
-    margin-top: 15px;
-    padding: 11px;
+    margin-top: 13px;
+    padding: 10px;
     border: none;
     background: #062B63;
     color: #FFFFFF;
     border-radius: 7px;
     font-weight: 600;
     cursor: pointer;
-    transition: 0.25s ease;
-}
-
-.select-btn:hover {
-    background: #056041;
 }
 
 .vehicle.selected .select-btn {
@@ -454,13 +489,24 @@ a{
 }
 
 @media(max-width:768px) {
+    .our-vehicles-section {
+        padding: 18px 14px;
+    }
+
+    .our-vehicles-heading h2 {
+        font-size: 24px;
+    }
+
     .transport-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 12px;
+    }
+
+    .vehicle {
+        flex-basis: 175px;
     }
 
     .vehicle img {
-        height: 190px;
+        height: 115px;
     }
 }
 
