@@ -2394,6 +2394,11 @@ function bookNow(){
 
     const total = tourPrice + transportPrice;
 
+    if (!selectedTransport) {
+    alert("Please select a vehicle before booking.");
+    return;
+    }
+
     const vehicleName =
         selectedTransport
         ? selectedTransport.name
