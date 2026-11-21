@@ -233,61 +233,51 @@ a{
 }
 
 
-/* ================= SAMKARAN DAY WISE ITINERARY ================= */
-
-.day-wise-section {
-    width: 100%;
-    margin: 25px auto;
-}
+/* =========================================
+   SAMKARANTRAVELLER - PREMIUM DAY ITINERARY
+========================================= */
 
 .day-wise-heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 18px;
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
 .day-wise-heading h2 {
     color: #062B63;
-    font-size: 23px;
+    font-size: 25px;
+    font-weight: 700;
     margin: 0;
-    padding: 0;
-    border: none;
+    position: relative;
+    padding-bottom: 10px;
 }
 
 .day-wise-heading h2::after {
     content: "";
-    display: block;
-    width: 48px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 65px;
     height: 3px;
     background: #F88214;
-    margin-top: 9px;
-}
-
-.show-all-btn {
-    background: #FFFFFF;
-    border: 1px solid #062B63;
-    color: #062B63;
-    padding: 9px 15px;
-    border-radius: 6px;
-    font-size: 13px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.show-all-btn:hover {
-    background: #062B63;
-    color: #FFFFFF;
+    border-radius: 5px;
 }
 
 .day-wise-item {
     background: #FFFFFF;
-    border: 1px solid #E1E7EE;
-    margin-bottom: 10px;
-    border-radius: 7px;
+    border: 1px solid #E3EAE6;
+    border-radius: 12px;
+    margin-bottom: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 7px rgba(0,0,0,0.06);
+    box-shadow: 0 3px 12px rgba(6,43,99,0.06);
+    transition: all 0.25s ease;
+}
+
+.day-wise-item.active {
+    border-color: #056041;
+    box-shadow: 0 5px 18px rgba(5,96,65,0.10);
 }
 
 .day-wise-toggle {
@@ -296,11 +286,15 @@ a{
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: 15px;
+    padding: 17px 18px;
     background: #FFFFFF;
     border: none;
     cursor: pointer;
     text-align: left;
+}
+
+.day-wise-item.active .day-wise-toggle {
+    background: #EFF7F2;
 }
 
 .day-wise-title {
@@ -308,34 +302,16 @@ a{
     align-items: center;
     flex-wrap: wrap;
     gap: 12px;
-    color: #333;
-    font-size: 14px;
-}
-
-.day-number {
-    font-weight: bold;
     color: #062B63;
-    white-space: nowrap;
-}
-
-.day-route {
-    color: #626B75;
-}
-
-.day-arrow {
-    color: #526174;
-    font-size: 19px;
-    transition: transform 0.3s ease;
-}
-
-.day-wise-item.active .day-arrow {
-    transform: rotate(180deg);
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .day-wise-content {
     display: none;
-    padding: 5px 16px 18px;
-    border-top: 1px solid #E8EDF2;
+    padding: 8px 18px 20px;
+    border-top: 1px solid #E3EAE6;
+    background: #FFFFFF;
 }
 
 .day-wise-item.active .day-wise-content {
@@ -350,7 +326,24 @@ a{
 }
 
 .day-wise-content strong {
-    color: #062B63;
+    color: #056041;
+}
+
+.show-all-btn {
+    background: #FFFFFF;
+    color: #056041;
+    border: 1px solid #056041;
+    border-radius: 7px;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.show-all-btn:hover {
+    background: #056041;
+    color: #FFFFFF;
 }
 
 @media(max-width:600px) {
@@ -376,6 +369,7 @@ a{
         font-size: 12px;
     }
 }
+
 
 /* ================= TRANSPORT ================= */
 
