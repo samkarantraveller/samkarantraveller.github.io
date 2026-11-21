@@ -2378,19 +2378,26 @@ Please contact me regarding this tour.`;
     window.open(whatsappURL, "_blank");
 }
 
+
 /* =====================================================
    BOOK NOW
 ===================================================== */
 
 function bookNow(){
 
-    const tourPrice = tour.price;
+    const tourPrice = Number(tour.price || 0);
 
     const transportPrice =
-        selectedTransport ? selectedTransport.price : 0;
+        selectedTransport
+        ? Number(selectedTransport.price || 0)
+        : 0;
 
-    const total =
-        tourPrice + transportPrice;
+    const total = tourPrice + transportPrice;
+
+    const vehicleName =
+        selectedTransport
+        ? selectedTransport.name
+        : "Not Selected";
 
     const message =
         `Hello SamKaranTraveller,
@@ -2401,6 +2408,7 @@ Tour: ${tour.title}
 Departure: ${selectedDate}
 Persons: 1
 
+Selected Vehicle: ${vehicleName}
 Tour Package: ₹${tourPrice.toLocaleString("en-IN")}
 Transportation: ₹${transportPrice.toLocaleString("en-IN")}
 
