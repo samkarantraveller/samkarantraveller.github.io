@@ -2149,8 +2149,10 @@ activitiesGrid.innerHTML = "";
    transportGrid.innerHTML = "";
 
      (tour.transport_details?.vehicles ||
-     tour.transport || []).forEach((vehicle, index) => {
-
+       tour.transport || [])
+      .filter(vehicle => vehicle.selected !== false)
+      .forEach((vehicle, index) => {
+    
     transportGrid.innerHTML += `
         <div class="vehicle ${index === 0 ? "selected" : ""}"
              onclick="selectVehicle(${index})"
