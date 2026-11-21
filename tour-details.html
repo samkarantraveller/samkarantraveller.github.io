@@ -2308,6 +2308,9 @@ function updateSummary(){
     document.getElementById("transportPrice").textContent =
         transportPrice.toLocaleString("en-IN");
 
+    document.getElementById("summaryVehicleName").textContent =
+    selectedTransport ? selectedTransport.name : "Not Selected";
+
     document.getElementById("totalPrice").textContent =
         total.toLocaleString("en-IN");
 
