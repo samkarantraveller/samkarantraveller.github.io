@@ -232,26 +232,23 @@ a{
     font-weight:bold;
 }
 
-
-/* =========================================
-   SAMKARANTRAVELLER - PREMIUM DAY ITINERARY
-========================================= */
+/* ===== SAMKARANTRAVELLER PREMIUM ITINERARY ===== */
 
 .day-wise-heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
 }
 
 .day-wise-heading h2 {
     color: #062B63;
-    font-size: 25px;
+    font-size: 23px;
     font-weight: 700;
     margin: 0;
+    padding-bottom: 9px;
     position: relative;
-    padding-bottom: 10px;
 }
 
 .day-wise-heading h2::after {
@@ -259,25 +256,30 @@ a{
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 65px;
+    width: 58px;
     height: 3px;
     background: #F88214;
     border-radius: 5px;
 }
 
+.itinerary-subtitle {
+    color: #64748B;
+    font-size: 13px;
+    margin: 5px 0 16px;
+}
+
 .day-wise-item {
     background: #FFFFFF;
     border: 1px solid #E3EAE6;
-    border-radius: 12px;
-    margin-bottom: 12px;
+    border-radius: 10px;
+    margin-bottom: 11px;
     overflow: hidden;
-    box-shadow: 0 3px 12px rgba(6,43,99,0.06);
-    transition: all 0.25s ease;
+    box-shadow: 0 3px 10px rgba(6,43,99,0.06);
 }
 
 .day-wise-item.active {
     border-color: #056041;
-    box-shadow: 0 5px 18px rgba(5,96,65,0.10);
+    box-shadow: 0 4px 14px rgba(5,96,65,0.10);
 }
 
 .day-wise-toggle {
@@ -286,7 +288,7 @@ a{
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: 17px 18px;
+    padding: 16px;
     background: #FFFFFF;
     border: none;
     cursor: pointer;
@@ -294,7 +296,7 @@ a{
 }
 
 .day-wise-item.active .day-wise-toggle {
-    background: #EFF7F2;
+    background: #EAF4EE;
 }
 
 .day-wise-title {
@@ -309,7 +311,7 @@ a{
 
 .day-wise-content {
     display: none;
-    padding: 8px 18px 20px;
+    padding: 8px 16px 18px;
     border-top: 1px solid #E3EAE6;
     background: #FFFFFF;
 }
@@ -329,26 +331,26 @@ a{
     color: #056041;
 }
 
-.show-all-btn {
+.show-all-days-btn {
     background: #FFFFFF;
     color: #056041;
     border: 1px solid #056041;
     border-radius: 7px;
-    padding: 9px 16px;
+    padding: 9px 15px;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    transition: 0.2s ease;
+    white-space: nowrap;
 }
 
-.show-all-btn:hover {
+.show-all-days-btn:hover {
     background: #056041;
     color: #FFFFFF;
 }
 
 @media(max-width:600px) {
     .day-wise-heading h2 {
-        font-size: 21px;
+        font-size: 20px;
     }
 
     .day-wise-toggle {
@@ -364,11 +366,12 @@ a{
         padding: 5px 13px 15px;
     }
 
-    .show-all-btn {
+    .show-all-days-btn {
         padding: 8px 11px;
         font-size: 12px;
     }
 }
+
 
 
 /* ================= TRANSPORT ================= */
