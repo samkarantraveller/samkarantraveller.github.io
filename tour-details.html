@@ -1008,7 +1008,8 @@ footer p{
     }
 }
 
-/* ================= SAMKARAN PREMIUM BOOKING ================= */
+
+/* ================= SAMKARAN PREMIUM ENQUIRY ================= */
 
 .premium-booking {
     width: calc(100% - 32px);
@@ -1025,21 +1026,23 @@ footer p{
 .premium-booking-header {
     background: #062B63;
     color: #FFFFFF;
-    padding: 26px 20px;
+    padding: 25px 20px;
     text-align: center;
     border-bottom: 4px solid #F88214;
 }
 
 .premium-booking-header h2 {
     color: #FFFFFF;
+    font-size: 21px;
     letter-spacing: 1.5px;
     border: none;
     padding: 0;
-    margin-bottom: 10px;
+    margin-bottom: 9px;
 }
 
 .premium-booking-header p {
     color: #E5ECF5;
+    font-size: 13px;
 }
 
 .booking-form {
@@ -1047,17 +1050,21 @@ footer p{
 }
 
 .booking-form h3 {
-    color: #062B63;
-    border-bottom: 2px solid #F88214;
+    color: #687586;
+    font-size: 13px;
+    font-weight: 700;
+    border: none;
+    border-bottom: 1px solid #E5EAF0;
     padding-bottom: 10px;
-    margin: 25px 0 18px;
+    margin: 25px 0 15px;
 }
 
 .booking-form label {
     display: block;
-    color: #056041;
-    font-weight: bold;
-    margin: 14px 0 7px;
+    color: #687586;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 10px 0 7px;
 }
 
 .booking-form input,
@@ -1068,7 +1075,7 @@ footer p{
     border: 1px solid #DCE3EB;
     border-radius: 8px;
     background: #FFFFFF;
-    font-size: 15px;
+    font-size: 14px;
     margin-bottom: 10px;
     box-sizing: border-box;
 }
@@ -1082,42 +1089,96 @@ footer p{
 }
 
 .booking-form textarea {
-    min-height: 100px;
+    min-height: 90px;
     resize: vertical;
+}
+
+.booking-contact-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 
 .booking-people {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 12px;
+}
+
+.booking-vehicle-grid {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 5px 2px 12px;
+}
+
+.booking-vehicle-card {
+    flex: 0 0 125px;
+    min-height: 95px;
+    padding: 12px 8px;
+    border: 1px solid #DCE3EB;
+    border-radius: 10px;
+    background: #FFFFFF;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.booking-vehicle-card:hover,
+.booking-vehicle-card.selected {
+    border: 2px solid #056041;
+    background: #EAF4EE;
+}
+
+.booking-vehicle-card .vehicle-icon {
+    display: block;
+    font-size: 23px;
+    margin-bottom: 8px;
+}
+
+.booking-vehicle-card strong {
+    display: block;
+    color: #062B63;
+    font-size: 12px;
+}
+
+.booking-vehicle-card small {
+    display: block;
+    color: #056041;
+    font-size: 11px;
+    margin-top: 5px;
 }
 
 .booking-total {
     background: #062B63;
     color: #FFFFFF;
-    padding: 20px;
+    padding: 18px;
     border-radius: 9px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    gap: 10px;
+    margin-top: 18px;
     border-left: 4px solid #F88214;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .booking-total strong {
     color: #FFFFFF;
-    font-size: 25px;
+    font-size: 23px;
+    white-space: nowrap;
 }
 
 .premium-inquiry-btn {
     width: 100%;
-    padding: 16px;
-    margin-top: 20px;
+    padding: 15px;
+    margin-top: 18px;
     border: none;
     border-radius: 8px;
     background: #F88214;
     color: #FFFFFF;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
@@ -1141,10 +1202,20 @@ footer p{
         padding: 23px 15px;
     }
 
+    .booking-contact-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
     .booking-people {
         gap: 10px;
     }
+
+    .booking-vehicle-card {
+        flex-basis: 115px;
+    }
 }
+
 
 /* ================= SAMKARAN PREMIUM TOUR INFORMATION ================= */
 
@@ -1829,73 +1900,90 @@ footer p{
 
 </section>
 
-
-<!-- ================= PREMIUM TOUR INQUIRY & BOOKING ================= -->
+<!-- ================= SAMKARAN PREMIUM TOUR ENQUIRY ================= -->
 
 <section class="card premium-booking">
 
     <div class="premium-booking-header">
-        <h2>TOUR INQUIRY & BOOKING</h2>
-        <p>Plan your journey with SamKaranTraveller</p>
+        <h2>TOUR ENQUIRY</h2>
+        <p>Share your travel details with SamKaranTraveller</p>
     </div>
 
     <div class="booking-form">
 
         <h3>1. VEHICLE & OCCUPANCY</h3>
 
-        <label>Preferred Vehicle</label>
-        <select id="bookingVehicle">
+        <!-- Existing JavaScript compatibility -->
+        <select id="bookingVehicle" hidden>
             <option value="">Select Vehicle</option>
         </select>
 
-        <label>Room Occupancy</label>
-        <select id="roomOccupancy">
-            <option>Double Occupancy</option>
-            <option>Single Occupancy</option>
-            <option>Triple Occupancy</option>
-        </select>
+        <div id="bookingVehicleCards" class="booking-vehicle-grid">
+            <p>Select your preferred vehicle</p>
+        </div>
 
         <h3>2. DEPARTURE DATE</h3>
 
-        <label>Travel Date</label>
         <input type="date" id="bookingDate">
 
         <h3>3. TRAVELLER INFORMATION</h3>
 
-        <input type="text" id="travellerName" placeholder="Traveller Name">
+        <input type="text"
+               id="travellerName"
+               placeholder="Traveller Name">
 
-        <input type="email" id="travellerEmail" placeholder="Email Address">
+        <div class="booking-contact-row">
+            <input type="email"
+                   id="travellerEmail"
+                   placeholder="Email Address">
 
-        <input type="tel" id="travellerMobile" placeholder="Mobile Number">
+            <input type="tel"
+                   id="travellerMobile"
+                   placeholder="Mobile Number">
+        </div>
 
         <div class="booking-people">
+
             <div>
                 <label>Adults</label>
-                <input type="number" id="bookingAdults" min="1" value="1">
+                <input type="number"
+                       id="bookingAdults"
+                       min="1"
+                       value="1">
             </div>
 
             <div>
                 <label>Kids</label>
-                <input type="number" id="bookingKids" min="0" value="0">
+                <input type="number"
+                       id="bookingKids"
+                       min="0"
+                       value="0">
             </div>
+
         </div>
 
         <h3>4. ADDITIONAL INFORMATION</h3>
 
-        <textarea id="customerNotes" placeholder="Customer Notes"></textarea>
+        <textarea id="customerNotes"
+                  placeholder="Any special requirements or travel notes?"></textarea>
 
         <div class="booking-total">
             <span>ESTIMATED TOTAL</span>
             <strong>₹<span id="bookingEstimatedTotal">0</span></strong>
         </div>
 
-        <button type="button" class="premium-inquiry-btn" onclick="submitTourInquiry()">
-            Send Inquiry →
+        <button type="button"
+                class="premium-inquiry-btn"
+                onclick="submitTourInquiry()">
+            Send Enquiry →
         </button>
 
     </div>
 
 </section>
+
+<!-- ================= END TOUR ENQUIRY ================= -->
+
     
 
 <!-- ================= FOOTER ================= -->
@@ -2449,44 +2537,67 @@ activitiesGrid.innerHTML = "";
     `;
 });
 
-
-/* ================= BOOKING VEHICLE DROPDOWN ================= */
+/* ================= ENQUIRY VEHICLE SELECTION ================= */
 
 const bookingVehicle =
     document.getElementById("bookingVehicle");
 
+const bookingVehicleCards =
+    document.getElementById("bookingVehicleCards");
+
+const availableBookingVehicles =
+    (tour.transport_details?.vehicles || tour.transport || [])
+    .filter(vehicle => vehicle.selected !== false);
+
 bookingVehicle.innerHTML =
     '<option value="">Select Vehicle</option>';
 
-(tour.transport_details?.vehicles ||
- tour.transport || []).forEach((vehicle, index) => {
+bookingVehicleCards.innerHTML = "";
+
+availableBookingVehicles.forEach((vehicle, index) => {
 
     const option = document.createElement("option");
 
     option.value = vehicle.name || `Vehicle ${index + 1}`;
-
     option.textContent =
-        `${vehicle.name || "Vehicle"} - ₹${Number(vehicle.price || 0).toLocaleString("en-IN")}`;
+        `${vehicle.name} - ₹${Number(vehicle.price || 0).toLocaleString("en-IN")}`;
 
     bookingVehicle.appendChild(option);
+
+    const vehicleIcon =
+        /bus|tempo|urbania/i.test(vehicle.name) ? "🚌" :
+        /innova|suv|xylo/i.test(vehicle.name) ? "🚙" :
+        /sedan|swift|dzire/i.test(vehicle.name) ? "🚘" :
+        "🚐";
+
+    bookingVehicleCards.innerHTML += `
+        <div class="booking-vehicle-card ${index === 0 ? "selected" : ""}"
+             onclick="selectBookingVehicle(${index})">
+
+            <span class="vehicle-icon">${vehicleIcon}</span>
+
+            <strong>${vehicle.name || "Vehicle"}</strong>
+
+            <small>₹${Number(vehicle.price || 0).toLocaleString("en-IN")}</small>
+
+        </div>
+    `;
 });
 
+selectedTransport = availableBookingVehicles[0] || null;
 
-bookingVehicle.addEventListener("change", function() {
+if (selectedTransport) {
+    bookingVehicle.value = selectedTransport.name;
+}
 
-    const vehicles =
-        tour.transport_details?.vehicles ||
-        tour.transport || [];
+function selectBookingVehicle(index) {
 
-    const selectedIndex = vehicles.findIndex(vehicle =>
-        (vehicle.name || "") === bookingVehicle.value
-    );
+    selectVehicle(index);
 
-    if (selectedIndex !== -1) {
-        selectVehicle(selectedIndex);
-    }
+    bookingVehicle.value =
+        selectedTransport ? selectedTransport.name : "";
+}
 
-});
 
 /* Default vehicle */
 
@@ -2503,17 +2614,21 @@ updateSummary();
    VEHICLE SELECT
 ===================================================== */
 
-function selectVehicle(index){
+
+function selectVehicle(index) {
 
     const availableVehicles =
-        (tour.transport_details?.vehicles ||
-         tour.transport || [])
+        (tour.transport_details?.vehicles || tour.transport || [])
         .filter(vehicle => vehicle.selected !== false);
 
-    selectedTransport = availableVehicles[index];
+    selectedTransport = availableVehicles[index] || null;
 
     document.querySelectorAll(".vehicle").forEach(vehicle => {
         vehicle.classList.remove("selected");
+    });
+
+    document.querySelectorAll(".booking-vehicle-card").forEach(card => {
+        card.classList.remove("selected");
     });
 
     const selectedElement =
@@ -2521,6 +2636,20 @@ function selectVehicle(index){
 
     if (selectedElement) {
         selectedElement.classList.add("selected");
+    }
+
+    const bookingCards =
+        document.querySelectorAll(".booking-vehicle-card");
+
+    if (bookingCards[index]) {
+        bookingCards[index].classList.add("selected");
+    }
+
+    const bookingVehicle =
+        document.getElementById("bookingVehicle");
+
+    if (bookingVehicle && selectedTransport) {
+        bookingVehicle.value = selectedTransport.name;
     }
 
     updateSummary();
@@ -2547,22 +2676,17 @@ function selectDate(element, date){
     updateSummary();
 }
 
+/* ================= DYNAMIC ENQUIRY SUMMARY ================= */
 
-/* =====================================================
-   SUMMARY
-===================================================== */
+function updateSummary() {
 
-function updateSummary(){
+    const tourPrice = Number(tour.price || 0);
 
-    const tourPrice =
-    Number(tour.price || 0);
+    const transportPrice = selectedTransport
+        ? Number(selectedTransport.price || 0)
+        : 0;
 
-    const transportPrice =
-        selectedTransport ?
-        Number(selectedTransport.price || 0) : 0;
-
-    const total =
-        tourPrice + transportPrice;
+    const total = tourPrice + transportPrice;
 
     document.getElementById("summaryTourPrice").textContent =
         tourPrice.toLocaleString("en-IN");
@@ -2571,28 +2695,38 @@ function updateSummary(){
         transportPrice.toLocaleString("en-IN");
 
     document.getElementById("summaryVehicleName").textContent =
-    selectedTransport ? selectedTransport.name : "Not Selected";
+        selectedTransport ? selectedTransport.name : "Not Selected";
 
     document.getElementById("totalPrice").textContent =
         total.toLocaleString("en-IN");
 
     document.getElementById("bookingEstimatedTotal").textContent =
-    total.toLocaleString("en-IN");
-    
-const bookingDate =
-    document.getElementById("bookingDate");
+        total.toLocaleString("en-IN");
 
-if (bookingDate.value) {
-    selectedDate = bookingDate.value;
+    const adults = Number(document.getElementById("bookingAdults").value || 0);
+    const kids = Number(document.getElementById("bookingKids").value || 0);
+
+    document.getElementById("persons").textContent = adults + kids;
+
+    const bookingDate = document.getElementById("bookingDate");
+
+    if (bookingDate.value) {
+        selectedDate = bookingDate.value;
+    }
+
+    document.getElementById("selectedDate").textContent = selectedDate;
 }
-    document.getElementById("selectedDate").textContent =
-        selectedDate;
-}
+
+/* UPDATE TOTAL WHEN TRAVELLERS CHANGE */
+
+document.getElementById("bookingAdults").addEventListener("input", updateSummary);
+document.getElementById("bookingKids").addEventListener("input", updateSummary);
 
 document.getElementById("bookingDate").addEventListener("change", function() {
     selectedDate = this.value;
     updateSummary();
 });
+    
     
 /* =====================================================
    TOUR INQUIRY SUBMISSION
