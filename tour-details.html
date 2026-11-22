@@ -1719,6 +1719,200 @@ footer p{
         font-size: 23px;
     }
 }
+
+
+/* ===== SAMKARAN ENQUIRY V2 DESIGN ===== */
+
+#samkaranEnquiryV2 .sk-enquiry-v2 {
+    width: calc(100% - 30px);
+    max-width: 1050px;
+    margin: 30px auto;
+    background: #FFFFFF;
+    border: 1px solid #DCE3EA;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(6, 43, 99, 0.08);
+    font-family: Arial, Helvetica, sans-serif;
+    color: #263445;
+}
+
+#samkaranEnquiryV2 .sk-enquiry-header {
+    background: #062B63;
+    color: #FFFFFF;
+    padding: 17px 22px;
+}
+
+#samkaranEnquiryV2 .sk-enquiry-header h2 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+#samkaranEnquiryV2 .sk-enquiry-body {
+    padding: 24px;
+}
+
+#samkaranEnquiryV2 .sk-enquiry-body h3 {
+    margin: 22px 0 12px;
+    color: #062B63;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+#samkaranEnquiryV2 .sk-enquiry-body h3:first-child {
+    margin-top: 0;
+}
+
+#samkaranEnquiryV2 .sk-v2-vehicles {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+#samkaranEnquiryV2 .sk-v2-pax {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#samkaranEnquiryV2 .sk-v2-pax button {
+    min-width: 85px;
+    padding: 11px 18px;
+    border: 1px solid #056041;
+    border-radius: 6px;
+    background: #FFFFFF;
+    color: #056041;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#samkaranEnquiryV2 .sk-v2-pax button:first-child {
+    background: #056041;
+    color: #FFFFFF;
+}
+
+#samkaranEnquiryV2 .sk-enquiry-body input,
+#samkaranEnquiryV2 .sk-enquiry-body textarea {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid #D5DDE6;
+    border-radius: 6px;
+    background: #FFFFFF;
+    color: #263445;
+    font-size: 14px;
+    outline: none;
+}
+
+#samkaranEnquiryV2 .sk-enquiry-body input:focus,
+#samkaranEnquiryV2 .sk-enquiry-body textarea:focus {
+    border-color: #056041;
+}
+
+#samkaranEnquiryV2 .sk-v2-fields {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+#samkaranEnquiryV2 #skV2Date {
+    max-width: 320px;
+}
+
+#samkaranEnquiryV2 .sk-v2-counter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 15px;
+    margin-bottom: 10px;
+    border: 1px solid #E0E6EC;
+    border-radius: 7px;
+}
+
+#samkaranEnquiryV2 .sk-v2-counter div {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+#samkaranEnquiryV2 .sk-v2-counter button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #056041;
+    border-radius: 5px;
+    background: #FFFFFF;
+    color: #056041;
+    font-size: 19px;
+    cursor: pointer;
+}
+
+#samkaranEnquiryV2 .sk-v2-counter strong {
+    min-width: 15px;
+    text-align: center;
+}
+
+#samkaranEnquiryV2 .sk-enquiry-body textarea {
+    min-height: 95px;
+    resize: vertical;
+}
+
+#samkaranEnquiryV2 .sk-v2-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-top: 22px;
+    padding: 17px;
+    background: #F3F7F5;
+    border: 1px solid #DCE9E1;
+    border-radius: 8px;
+}
+
+#samkaranEnquiryV2 .sk-v2-footer div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#samkaranEnquiryV2 .sk-v2-footer small {
+    color: #536273;
+    font-size: 12px;
+}
+
+#samkaranEnquiryV2 .sk-v2-footer strong {
+    color: #062B63;
+    font-size: 22px;
+}
+
+#samkaranEnquiryV2 .sk-v2-footer > button {
+    padding: 13px 23px;
+    border: none;
+    border-radius: 6px;
+    background: #056041;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@media (max-width: 650px) {
+    #samkaranEnquiryV2 .sk-enquiry-body {
+        padding: 17px;
+    }
+
+    #samkaranEnquiryV2 .sk-v2-fields {
+        grid-template-columns: 1fr;
+    }
+
+    #samkaranEnquiryV2 .sk-v2-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    #samkaranEnquiryV2 .sk-v2-footer > button {
+        width: 100%;
+    }
+}
     
 </style>
 </head>
@@ -2259,6 +2453,16 @@ footer p{
 </section>
 
 <!-- ================= END TOUR ENQUIRY ================= -->
+
+<!-- ========== SAMKARAN PREMIUM ENQUIRY V2 ========== -->
+
+<section id="samkaranEnquiryV2">
+
+    <!-- NEW DESIGN WILL BE ADDED HERE -->
+
+</section>
+
+<!-- ========== END PREMIUM ENQUIRY V2 ========== -->
 
     
 
