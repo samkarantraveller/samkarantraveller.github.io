@@ -1840,79 +1840,232 @@ footer p{
     height: 30px;
     border: 1px solid #056041;
     border-radius: 5px;
-    background: #FFFFFF;
+
+/* ========== SAMKARAN PREMIUM ENQUIRY V2 ========== */
+
+#samkaranEnquiryV2 {
+    width: 100%;
+    padding: 30px 15px;
+    background: #f4f6f8;
+}
+
+.sk-enquiry-v2 {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #dce3eb;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(6, 43, 99, 0.08);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.sk-enquiry-header {
+    background: #062B63;
+    padding: 17px 22px;
+    text-align: center;
+}
+
+.sk-enquiry-header h2 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+}
+
+.sk-enquiry-body {
+    padding: 24px;
+}
+
+.sk-enquiry-body h3 {
+    margin: 22px 0 12px;
+    color: #062B63;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.sk-enquiry-body h3:first-child {
+    margin-top: 0;
+}
+
+.sk-v2-vehicles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.sk-v2-pax {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.sk-v2-pax button {
+    min-width: 85px;
+    padding: 10px 18px;
+    border: 1px solid #cbd5e1;
+    border-radius: 5px;
+    background: #ffffff;
+    color: #062B63;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.sk-v2-pax button:first-child {
+    background: #056041;
+    border-color: #056041;
+    color: #ffffff;
+}
+
+.sk-enquiry-body input,
+.sk-enquiry-body textarea {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 5px;
+    background: #ffffff;
+    color: #222222;
+    font-size: 14px;
+    outline: none;
+}
+
+.sk-enquiry-body input:focus,
+.sk-enquiry-body textarea:focus {
+    border-color: #056041;
+    box-shadow: 0 0 0 2px rgba(5, 96, 65, 0.08);
+}
+
+.sk-v2-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.sk-v2-fields input:first-child {
+    grid-column: 1 / -1;
+}
+
+.sk-v2-counter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 13px 14px;
+    margin-bottom: 10px;
+    border: 1px solid #e0e6ed;
+    border-radius: 5px;
+    color: #263445;
+    font-size: 14px;
+}
+
+.sk-v2-counter div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.sk-v2-counter button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #056041;
+    border-radius: 4px;
+    background: #ffffff;
     color: #056041;
     font-size: 19px;
     cursor: pointer;
 }
 
-#samkaranEnquiryV2 .sk-v2-counter strong {
+.sk-v2-counter strong {
     min-width: 15px;
     text-align: center;
 }
 
-#samkaranEnquiryV2 .sk-enquiry-body textarea {
+.sk-enquiry-body textarea {
     min-height: 95px;
     resize: vertical;
 }
 
-#samkaranEnquiryV2 .sk-v2-footer {
+.sk-v2-footer {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     gap: 15px;
     margin-top: 22px;
     padding: 17px;
-    background: #F3F7F5;
-    border: 1px solid #DCE9E1;
-    border-radius: 8px;
+    background: #f1f5f9;
+    border: 1px solid #e0e6ed;
+    border-radius: 6px;
 }
 
-#samkaranEnquiryV2 .sk-v2-footer div {
+.sk-v2-footer div {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-#samkaranEnquiryV2 .sk-v2-footer small {
-    color: #536273;
+.sk-v2-footer small {
+    color: #64748b;
     font-size: 12px;
 }
 
-#samkaranEnquiryV2 .sk-v2-footer strong {
-    color: #062B63;
+.sk-v2-footer strong {
+    color: #056041;
     font-size: 22px;
 }
 
-#samkaranEnquiryV2 .sk-v2-footer > button {
-    padding: 13px 23px;
+.sk-v2-footer > button {
+    padding: 12px 22px;
     border: none;
-    border-radius: 6px;
-    background: #056041;
-    color: #FFFFFF;
+    border-radius: 5px;
+    background: #F88214;
+    color: #ffffff;
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
 }
 
-@media (max-width: 650px) {
-    #samkaranEnquiryV2 .sk-enquiry-body {
+.sk-v2-footer > button:hover {
+    background: #e56e05;
+}
+
+@media (max-width: 600px) {
+    #samkaranEnquiryV2 {
+        padding: 18px 10px;
+    }
+
+    .sk-enquiry-body {
         padding: 17px;
     }
 
-    #samkaranEnquiryV2 .sk-v2-fields {
+    .sk-enquiry-header h2 {
+        font-size: 17px;
+    }
+
+    .sk-v2-vehicles {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sk-v2-fields {
         grid-template-columns: 1fr;
     }
 
-    #samkaranEnquiryV2 .sk-v2-footer {
+    .sk-v2-fields input:first-child {
+        grid-column: auto;
+    }
+
+    .sk-v2-footer {
         align-items: stretch;
         flex-direction: column;
     }
 
-    #samkaranEnquiryV2 .sk-v2-footer > button {
+    .sk-v2-footer > button {
         width: 100%;
     }
 }
+
+/* ========== END ENQUIRY V2 CSS ========== */
     
 </style>
 </head>
