@@ -1278,6 +1278,101 @@ footer p{
     }
 }
 
+    /* FULL BACKGROUND TOUR CARD */
+
+.tour-hero {
+    position: relative;
+    height: 430px;
+    min-height: 430px;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #14202b;
+}
+
+.tour-gallery {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.tour-gallery .tour-image {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.tour-gallery::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.05) 25%,
+        rgba(0,0,0,0.25) 50%,
+        rgba(0,0,0,0.85) 100%
+    );
+    pointer-events: none;
+}
+
+.tour-info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 24px;
+    color: white;
+}
+
+.tour-info h1 {
+    color: white;
+    font-size: 28px;
+}
+
+.tour-info .meta span {
+    color: white;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.25);
+    backdrop-filter: blur(5px);
+}
+
+.tour-info .price {
+    color: white;
+    font-size: 25px;
+}
+
+.tour-info .price small {
+    color: white;
+}
+
+.gallery-arrow,
+.gallery-dots {
+    z-index: 3;
+}
+
+@media(max-width:600px) {
+    .tour-hero {
+        height: 340px;
+        min-height: 340px;
+    }
+
+    .tour-info {
+        padding: 16px;
+    }
+
+    .tour-info h1 {
+        font-size: 22px;
+    }
+
+    .tour-info .price {
+        font-size: 23px;
+    }
+}
+    
 </style>
 </head>
 
