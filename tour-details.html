@@ -2888,8 +2888,27 @@ updateSummary();
 /* ================= TOUR INCLUDES CLICK ================= */
 
 function toggleTourInclude(element) {
-    element.classList.toggle("active");
+
+    document.querySelectorAll(".tour-include-item").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    element.classList.add("active");
 }
+
+// Screen ke khaali area par click karne se selection hatayein
+document.addEventListener("click", function(event) {
+
+    if (!event.target.closest(".tour-include-item")) {
+
+        document.querySelectorAll(".tour-include-item").forEach(item => {
+            item.classList.remove("active");
+        });
+
+    }
+
+});
+
     
 // ================= DAY WISE ITINERARY =================
 
