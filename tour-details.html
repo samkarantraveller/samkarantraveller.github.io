@@ -2598,14 +2598,15 @@ function selectBookingVehicle(index) {
         selectedTransport ? selectedTransport.name : "";
 }
 
-
 /* Default vehicle */
 
 selectedTransport =
     (tour.transport_details?.vehicles ||
-     tour.transport || [])[0] || null;
+     tour.transport || [])
+    .filter(vehicle => vehicle.selected !== false)[0] || null;
 
-bookingVehicle.selectedIndex = selectedTransport ? 1 : 0;
+bookingVehicle.value =
+    selectedTransport ? selectedTransport.name : "";
 
 updateSummary();
 
