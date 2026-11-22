@@ -232,6 +232,85 @@ a{
     font-weight:bold;
 }
 
+/* ================= TOUR INCLUDES ================= */
+
+.tour-includes-section {
+    padding: 22px;
+    margin-top: 18px;
+    background: #FFFFFF;
+    border: 1px solid #E2E7ED;
+    border-radius: 14px;
+}
+
+.tour-includes-heading h2 {
+    color: #062B63;
+    font-size: 22px;
+    margin: 0 0 6px;
+}
+
+.tour-includes-heading p {
+    color: #526174;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.tour-includes-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+}
+
+.tour-include-item {
+    min-height: 105px;
+    padding: 15px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    background: #F5F8FB;
+    border: 1px solid #E2E7ED;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.tour-include-item:hover {
+    border-color: #056041;
+    transform: translateY(-3px);
+}
+
+.tour-include-item.active {
+    background: #E7F4EE;
+    border: 2px solid #056041;
+    color: #056041;
+    transform: scale(1.04);
+}
+
+.include-icon {
+    font-size: 27px;
+}
+
+.tour-include-item strong {
+    font-size: 13px;
+    color: #062B63;
+}
+
+.tour-include-item.active strong {
+    color: #056041;
+}
+
+@media(max-width:600px) {
+    .tour-includes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tour-includes-section {
+        padding: 16px;
+    }
+}
+
 /* ===== SAMKARANTRAVELLER PREMIUM ITINERARY ===== */
 
 .day-wise-heading {
@@ -1350,6 +1429,48 @@ footer p{
 </div>
 
 
+<!-- ================= TOUR INCLUDES ================= -->
+
+<section class="card tour-includes-section">
+
+    <div class="tour-includes-heading">
+        <h2>Tour Includes</h2>
+        <p>Explore the facilities included in your tour package</p>
+    </div>
+
+    <div class="tour-includes-grid">
+
+        <div class="tour-include-item" onclick="toggleTourInclude(this)">
+            <span class="include-icon">🧑‍💼</span>
+            <strong>Tour Manager</strong>
+        </div>
+
+        <div class="tour-include-item" onclick="toggleTourInclude(this)">
+            <span class="include-icon">🏨</span>
+            <strong>Hotel</strong>
+        </div>
+
+        <div class="tour-include-item" onclick="toggleTourInclude(this)">
+            <span class="include-icon">🍽️</span>
+            <strong>Meals</strong>
+        </div>
+
+        <div class="tour-include-item" onclick="toggleTourInclude(this)">
+            <span class="include-icon">🚐</span>
+            <strong>Transport</strong>
+        </div>
+
+        <div class="tour-include-item" onclick="toggleTourInclude(this)">
+            <span class="include-icon">🏔️</span>
+            <strong>Sightseeing</strong>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= END TOUR INCLUDES ================= -->
+    
 
 <!-- ================= DAY WISE ITINERARY ================= -->
 
@@ -2762,6 +2883,12 @@ updateSummary();
 
     }
 
+}
+
+/* ================= TOUR INCLUDES CLICK ================= */
+
+function toggleTourInclude(element) {
+    element.classList.toggle("active");
 }
     
 // ================= DAY WISE ITINERARY =================
