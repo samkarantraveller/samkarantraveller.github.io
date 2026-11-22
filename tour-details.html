@@ -2909,6 +2909,51 @@ async function loadManagementPackage() {
 
         tour = packageData;
 
+    /* Refresh enquiry vehicle selection */
+
+const availableVehicles =
+    (tour.transport_details?.vehicles || tour.transport || [])
+    .filter(vehicle => vehicle.selected !== false);
+
+selectedTransport = availableVehicles[0] || null;
+
+const bookingVehicle =
+    document.getElementById("bookingVehicle");
+
+const bookingVehicleCards =
+    document.getElementById("bookingVehicleCards");
+
+bookingVehicle.innerHTML =
+    '<option value="">Select Vehicle</option>';
+
+bookingVehicleCards.innerHTML = "";
+
+availableVehicles.forEach((vehicle, index) => {
+
+    const option = document.createElement("option");
+    option.value = vehicle.name || `Vehicle ${index + 1}`;
+    option.textContent = vehicle.name || "Vehicle";
+
+    bookingVehicle.appendChild(option);
+
+    const icon =
+        /bus|tempo|urbania/i.test(vehicle.name) ? "🚌" :
+        /innova|suv|xylo/i.test(vehicle.name) ? "🚙" :
+        /sedan|swift|dzire/i.test(vehicle.name) ? "🚘" : "🚐";
+
+    bookingVehicleCards.innerHTML += `
+        <div class="booking-vehicle-card ${index === 0 ? "selected" : ""}"
+             onclick="selectBookingVehicle(${index})">
+            <span class="vehicle-icon">${icon}</span>
+            <strong>${vehicle.name || "Vehicle"}</strong>
+            <small>₹${Number(vehicle.price || 0).toLocaleString("en-IN")}</small>
+        </div>
+    `;
+});
+
+bookingVehicle.value =
+    selectedTransport ? selectedTransport.name : "";
+
    renderDayWiseItinerary(tour.itinerary);
 
      const includedBox = document.getElementById("included");
@@ -2927,6 +2972,10 @@ async function loadManagementPackage() {
         
         document.getElementById("tourTitle").textContent =
             tour.title;
+        
+    /* Refresh vehicle and price summary */
+
+updateSummary();
 
         /* ================= LOAD PACKAGE GALLERY ================= */
 
