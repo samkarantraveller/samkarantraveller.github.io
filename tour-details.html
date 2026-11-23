@@ -678,20 +678,194 @@ a{
     font-weight:bold;
 }
 
-/* ================= FOOTER ================= */
 
-footer{
-    background:#243447;
-    color:white;
-    text-align:center;
-    padding:25px;
-    margin-top:40px;
+/* ================= PREMIUM FOOTER ================= */
+
+.premium-footer {
+    background: linear-gradient(135deg, #0b2027, #142f38);
+    color: #fff;
+    padding: 0 7% 20px;
+    margin-top: 40px;
+    position: relative;
 }
 
-footer p{
-    color:#ddd;
-    margin-top:8px;
+/* CONTACT BAR */
+
+.footer-contact-bar {
+    max-width: 1100px;
+    margin: 0 auto 55px;
+    transform: translateY(-25px);
+    background: #203d45;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 22px 25px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
 }
+
+.footer-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.footer-contact-icon {
+    width: 42px;
+    height: 42px;
+    background: #a92738;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    flex-shrink: 0;
+}
+
+.footer-contact-item small {
+    display: block;
+    color: #aebdc1;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.footer-contact-item strong {
+    display: block;
+    font-size: 13px;
+    color: #fff;
+}
+
+/* FOOTER MAIN */
+
+.footer-main {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    gap: 35px;
+    padding-bottom: 45px;
+}
+
+.footer-column h3 {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.footer-column h3::after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 2px;
+    background: #d9a441;
+    margin-top: 8px;
+}
+
+.footer-column p {
+    color: #b9c5c8;
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 18px;
+}
+
+.footer-column a {
+    display: block;
+    color: #b9c5c8;
+    text-decoration: none;
+    font-size: 12px;
+    margin-bottom: 12px;
+    transition: 0.3s;
+}
+
+.footer-column a:hover {
+    color: #d9a441;
+    padding-left: 4px;
+}
+
+.footer-social {
+    display: inline-block !important;
+    color: #fff !important;
+}
+
+/* COPYRIGHT */
+
+.footer-bottom {
+    max-width: 1100px;
+    margin: 0 auto;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-bottom p {
+    color: #b9c5c8;
+    font-size: 12px;
+    margin: 0;
+}
+
+.footer-bottom a {
+    color: #9eacb0;
+    text-decoration: none;
+    font-size: 11px;
+    margin-left: 18px;
+}
+
+/* MOBILE FOOTER */
+
+@media (max-width: 768px) {
+
+    .premium-footer {
+        padding: 0 6% 20px;
+    }
+
+    .footer-contact-bar {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 20px;
+        margin-bottom: 35px;
+    }
+
+    .footer-main {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px 20px;
+        padding-bottom: 30px;
+    }
+
+    .footer-about {
+        grid-column: 1 / -1;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 1.8;
+    }
+
+    .footer-bottom a {
+        margin-left: 0;
+        margin-right: 15px;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .footer-main {
+        gap: 25px 12px;
+    }
+
+    .footer-column h3 {
+        font-size: 14px;
+    }
+
+    .footer-column a {
+        font-size: 11px;
+    }
+}
+
 
 /* ================= MOBILE ================= */
 
@@ -2278,26 +2452,96 @@ footer p{
 <!-- ================= END TOUR ENQUIRY ================= -->
 
 
-<!-- ================= FOOTER ================= -->
 
-<footer>
+<!-- ================= PREMIUM FOOTER ================= -->
 
-<strong>
-SamKaranTraveller
-</strong>
+<footer class="premium-footer">
 
-<p>
-Your trusted travel partner for Uttarakhand tours and memorable journeys.
-</p>
+    <!-- CONTACT BAR -->
+    <div class="footer-contact-bar">
 
-<p>
-© 2026 SamKaranTraveller. All Rights Reserved.
-</p>
+        <div class="footer-contact-item">
+            <span class="footer-contact-icon">📍</span>
+            <div>
+                <small>Visit Us</small>
+                <strong>SamKaranTraveller</strong>
+            </div>
+        </div>
+
+        <div class="footer-contact-item">
+            <span class="footer-contact-icon">📞</span>
+            <div>
+                <small>Call Anytime</small>
+                <strong>Contact Us</strong>
+            </div>
+        </div>
+
+        <div class="footer-contact-item">
+            <span class="footer-contact-icon">✉️</span>
+            <div>
+                <small>Email Support</small>
+                <strong>Customer Support</strong>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER CONTENT -->
+    <div class="footer-main">
+
+        <div class="footer-column footer-about">
+            <h3>SamKaranTraveller</h3>
+
+            <p>
+                Your trusted travel partner for Uttarakhand tours,
+                Himalayan adventures and memorable journeys.
+            </p>
+
+            <a href="#" class="footer-social">Instagram</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Uttarakhand Tours</h3>
+            <a href="#">Char Dham Yatra</a>
+            <a href="#">Kedarnath Yatra</a>
+            <a href="#">Badrinath Yatra</a>
+            <a href="#">Mussoorie Tour</a>
+            <a href="#">Auli Tour</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Popular Destinations</h3>
+            <a href="#">Kedarnath</a>
+            <a href="#">Badrinath</a>
+            <a href="#">Rishikesh</a>
+            <a href="#">Haridwar</a>
+            <a href="#">Nainital</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <a href="#">About Us</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Our Packages</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+
+    </div>
+
+    <!-- COPYRIGHT -->
+    <div class="footer-bottom">
+        <p>© 2026 SamKaranTraveller. All Rights Reserved.</p>
+
+        <div>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+    </div>
 
 </footer>
 
-
-<script>
+ <script> 
 
 /* =====================================================
    TOUR DATABASE
