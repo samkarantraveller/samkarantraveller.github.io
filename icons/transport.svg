@@ -1,7 +1,22 @@
+
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <circle cx="32" cy="32" r="28" fill="#EAF2FF"/>
-  <path d="M12 35l5-16h30l5 16v13H12V35Z" fill="#245B9E"/>
-  <path d="M20 23h24l4 11H16l4-11Z" fill="white"/>
-  <circle cx="21" cy="47" r="5" fill="#245B9E" stroke="white" stroke-width="2"/>
-  <circle cx="43" cy="47" r="5" fill="#245B9E" stroke="white" stroke-width="2"/>
+  <g stroke="#10427F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Bus outer body -->
+    <path d="M12 48V17C12 10 17 7 32 7S52 10 52 17V48C52 53 48 56 43 56H21C16 56 12 53 12 48Z"/>
+    <!-- Side mirrors -->
+    <path d="M12 25H8V36H12M52 25H56V36H52"/>
+    <!-- Top windshield line -->
+    <path d="M19 17Q32 14 45 17"/>
+  </g>
+  <!-- Main windshield -->
+  <path d="M17 23Q32 20 47 23V39Q47 43 43 43H21Q17 43 17 39Z"
+        fill="#10427F"/>
+  <!-- Headlights -->
+  <circle cx="21" cy="48" r="3.5" fill="#10427F"/>
+  <circle cx="43" cy="48" r="3.5" fill="#10427F"/>
+  <!-- Front grille -->
+  <rect x="27" y="45" width="10" height="5" rx="2.5" fill="#10427F"/>
+  <!-- Lower body -->
+  <path d="M19 55V59H25V56M39 56V59H45V55"
+        fill="#10427F" stroke="#10427F" stroke-width="2.5"/>
 </svg>
