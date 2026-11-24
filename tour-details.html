@@ -3621,35 +3621,39 @@ activitiesGrid.innerHTML = "";
 
 transportGrid.innerHTML = "";
 
-(tour.transport_details?.vehicles || []).forEach((vehicle, index) => {
+const availableVehicles =
+    (tour.transport_details?.vehicles || tour.transport || [])
+    .filter(vehicle => vehicle.selected !== false);
+
+availableVehicles.forEach((vehicle, index) => {
 
     transportGrid.innerHTML += `
         <div class="vehicle ${index === 0 ? "selected" : ""}"
              onclick="selectVehicle(${index})"
              id="vehicle-${index}">
 
-            <img src="${vehicle.image || ""}" alt="${vehicle.name}">
+            <img src="${vehicle.image || ""}" alt="${vehicle.name || "Vehicle"}">
 
             <div class="vehicle-info">
-                <h3>${vehicle.name}</h3>
+                <h3>${vehicle.name || "Vehicle"}</h3>
 
                 <div class="capacity">
-                    👥 ${vehicle.persons} Persons
+                    👥 ${vehicle.persons || 0} Persons
                 </div>
 
                 <div class="vehicle-price">
                     ₹${Number(vehicle.price || 0).toLocaleString("en-IN")}
                 </div>
 
-                <button class="select-btn">Select Vehicle</button>
+                <button class="select-btn" type="button">Select Vehicle</button>
             </div>
         </div>
     `;
 });
 
-selectedTransport =
-    (tour.transport_details?.vehicles || [])[0] || null;
+selectedTransport = availableVehicles[0] || null;
 
+renderBookingPaxOptions();
 updateSummary();
 
     } catch (error) {
