@@ -3236,6 +3236,16 @@ activitiesGrid.innerHTML = "";
     `;
 });
 
+const availableVehicles =
+    (tour.transport_details?.vehicles || tour.transport || [])
+    .filter(vehicle => vehicle.selected !== false);
+
+selectedTransport = availableVehicles[0] || null;
+
+renderBookingPaxOptions();
+
+updateSummary();
+     
 /* ================= ENQUIRY VEHICLE SELECTION ================= */
 
 const bookingVehicle =
@@ -3289,6 +3299,10 @@ if (selectedTransport) {
     bookingVehicle.value = selectedTransport.name;
 }
 
+renderBookingPaxOptions();
+     
+updateSummary();
+     
 function selectBookingVehicle(index) {
 
     selectVehicle(index);
