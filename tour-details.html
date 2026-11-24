@@ -3233,13 +3233,25 @@ function updateSummary() {
         ? Number(selectedTransport.price || 0)
         : 0;
 
-    const total = tourPrice + transportPrice;
+    const adults = Math.max(1,
+        Number(document.getElementById("bookingAdults").value || 1)
+    );
+
+    const kids = Math.max(0,
+        Number(document.getElementById("bookingKids").value || 0)
+    );
+
+    const persons = adults + kids;
+
+    const totalTourPrice = tourPrice * persons;
+    const totalTransportPrice = transportPrice * persons;
+    const total = totalTourPrice + totalTransportPrice;
 
     document.getElementById("summaryTourPrice").textContent =
-        tourPrice.toLocaleString("en-IN");
+        totalTourPrice.toLocaleString("en-IN");
 
     document.getElementById("transportPrice").textContent =
-        transportPrice.toLocaleString("en-IN");
+        totalTransportPrice.toLocaleString("en-IN");
 
     document.getElementById("summaryVehicleName").textContent =
         selectedTransport ? selectedTransport.name : "Not Selected";
@@ -3250,10 +3262,7 @@ function updateSummary() {
     document.getElementById("bookingEstimatedTotal").textContent =
         total.toLocaleString("en-IN");
 
-    const adults = Number(document.getElementById("bookingAdults").value || 0);
-    const kids = Number(document.getElementById("bookingKids").value || 0);
-
-    document.getElementById("persons").textContent = adults + kids;
+    document.getElementById("persons").textContent = persons;
 
     const bookingDate = document.getElementById("bookingDate");
 
@@ -3262,7 +3271,8 @@ function updateSummary() {
     }
 
     document.getElementById("selectedDate").textContent = selectedDate;
-}
+               }
+    
 
 /* UPDATE TOTAL WHEN TRAVELLERS CHANGE */
 
@@ -3279,17 +3289,28 @@ document.getElementById("bookingDate").addEventListener("change", function() {
    TOUR INQUIRY SUBMISSION
 ===================================================== */
 
+
 function submitTourInquiry() {
 
     const name = document.getElementById("travellerName").value.trim();
     const email = document.getElementById("travellerEmail").value.trim();
     const mobile = document.getElementById("travellerMobile").value.trim();
     const vehicle = document.getElementById("bookingVehicle").value;
-    const occupancy = document.getElementById("roomOccupancy").value;
     const date = document.getElementById("bookingDate").value;
-    const adults = document.getElementById("bookingAdults").value;
-    const kids = document.getElementById("bookingKids").value;
+    const adults = Math.max(1, Number(document.getElementById("bookingAdults").value || 1));
+    const kids = Math.max(0, Number(document.getElementById("bookingKids").value || 0));
     const notes = document.getElementById("customerNotes").value.trim();
+
+    const persons = adults + kids;
+
+    const tourPrice = Number(tour.price || 0);
+    const transportPrice = selectedTransport
+        ? Number(selectedTransport.price || 0)
+        : 0;
+
+    const totalTourPrice = tourPrice * persons;
+    const totalTransportPrice = transportPrice * persons;
+    const total = totalTourPrice + totalTransportPrice;
 
     if (!name || !mobile || !date) {
         alert("Please enter your name, mobile number and travel date.");
@@ -3304,10 +3325,16 @@ Name: ${name}
 Email: ${email || "Not provided"}
 Mobile: ${mobile}
 Travel Date: ${date}
-Vehicle: ${vehicle || "Not selected"}
-Room Occupancy: ${occupancy}
+
 Adults: ${adults}
 Kids: ${kids}
+Total Persons: ${persons}
+
+Vehicle: ${vehicle || "Not selected"}
+Tour Package: ₹${totalTourPrice.toLocaleString("en-IN")}
+Transportation: ₹${totalTransportPrice.toLocaleString("en-IN")}
+Grand Total: ₹${total.toLocaleString("en-IN")}
+
 Customer Notes: ${notes || "None"}
 
 Please contact me regarding this tour.`;
@@ -3329,48 +3356,54 @@ Please contact me regarding this tour.`;
 function bookNow(){
 
     if (!selectedTransport) {
-    alert("Please select a vehicle before booking.");
-    return;
+        alert("Please select a vehicle before booking.");
+        return;
     }
 
     const tourPrice = Number(tour.price || 0);
+    const transportPrice = Number(selectedTransport.price || 0);
 
-    const transportPrice =
-    Number(selectedTransport.price || 0);
+    const adults = Math.max(1,
+        Number(document.getElementById("bookingAdults").value || 1)
+    );
 
-    const total = tourPrice + transportPrice;
+    const kids = Math.max(0,
+        Number(document.getElementById("bookingKids").value || 0)
+    );
 
-    const vehicleName =
-        selectedTransport
-        ? selectedTransport.name
-        : "Not Selected";
+    const persons = adults + kids;
+
+    const totalTourPrice = tourPrice * persons;
+    const totalTransportPrice = transportPrice * persons;
+    const total = totalTourPrice + totalTransportPrice;
+
+    const vehicleName = selectedTransport.name;
 
     const message =
-        `Hello SamKaranTraveller,
+`Hello SamKaranTraveller,
 
 I want to book:
 
 Tour: ${tour.title}
 Departure: ${selectedDate}
-Persons: 1
+Adults: ${adults}
+Kids: ${kids}
+Total Persons: ${persons}
 
 Selected Vehicle: ${vehicleName}
-Tour Package: ₹${tourPrice.toLocaleString("en-IN")}
-Transportation: ₹${transportPrice.toLocaleString("en-IN")}
+Tour Package: ₹${totalTourPrice.toLocaleString("en-IN")}
+Transportation: ₹${totalTransportPrice.toLocaleString("en-IN")}
 
-Total: ₹${total.toLocaleString("en-IN")}`;
+Grand Total: ₹${total.toLocaleString("en-IN")}`;
 
     const whatsappNumber = "917895612495";
 
     const whatsappURL =
-        "https://wa.me/" +
-        whatsappNumber +
-        "?text=" +
-        encodeURIComponent(message);
+        "https://wa.me/" + whatsappNumber +
+        "?text=" + encodeURIComponent(message);
 
     window.open(whatsappURL, "_blank");
 }
-
 
 /* =====================================================
    INITIAL UPDATE
