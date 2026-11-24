@@ -3051,7 +3051,11 @@ function selectVehicle(index) {
     if (bookingVehicle && selectedTransport) {
         bookingVehicle.value = selectedTransport.name;
     }
-    
+
+        renderBookingPaxOptions();
+
+    updateSummary();        
+}
 
 /* =====================================================
    DATE SELECT
