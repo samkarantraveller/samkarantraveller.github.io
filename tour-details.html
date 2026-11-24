@@ -3232,6 +3232,17 @@ function selectDate(element, date){
 
 /* ================= DYNAMIC ENQUIRY SUMMARY ================= */
 
+function changeTravellerCount(inputId, change) {
+
+    const input = document.getElementById(inputId);
+    const min = Number(input.min || 0);
+    const current = Number(input.value || 0);
+
+    input.value = Math.max(min, current + change);
+
+    updateSummary();
+}
+
 function updateSummary() {
 
 
