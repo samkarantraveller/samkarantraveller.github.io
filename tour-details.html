@@ -3384,27 +3384,41 @@ function showTourInfoTab(tab) {
 async function loadManagementPackage() {
 
     try {
-        
-        if (!isPackageId) return;
+
+        console.log("URL:", window.location.href);
+        console.log("isPackageId:", isPackageId);
+        console.log("tourName:", tourName);
+
+        if (!isPackageId) {
+            console.log("STOP: isPackageId is false");
+            return;
+        }
 
         const response = await fetch(
             "https://samkarantraveller-management-system.vercel.app/api/public-packages"
         );
 
         if (!response.ok) {
-            throw new Error("Package API Error");
+            throw new Error("Package API Error: " + response.status);
         }
 
         const data = await response.json();
 
+        console.log("API Packages:", data.packages);
+
         const packageData = (data.packages || []).find(
-            pkg => pkg.id === tourName
+            pkg => String(pkg.id) === String(tourName)
         );
 
-        if (!packageData) return;
+        console.log("Matched Package:", packageData);
+
+        if (!packageData) {
+            console.log("STOP: Package ID not matched");
+            return;
+        }
 
         tour = packageData;
-
+        
     /* Refresh enquiry vehicle selection */
 
 const availableVehicles =
