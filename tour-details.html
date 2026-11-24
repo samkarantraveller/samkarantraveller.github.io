@@ -3702,7 +3702,7 @@ async function loadManagementPackage() {
 
     try {
         
-        if (!isPackageId) return;
+        if (!tourName) return;
 
         const response = await fetch(
             "https://samkarantraveller-management-system.vercel.app/api/public-packages"
