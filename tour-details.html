@@ -3383,343 +3383,243 @@ function showTourInfoTab(tab) {
    LOAD PACKAGE FROM MANAGEMENT SYSTEM
 ===================================================== */
 
-async function loadManagementPackage() {
 
-    try {
+/* =====================================================
+   SAMKARANTRAVELLER - COMPLETE TOUR DETAILS SYSTEM
+   Management System API Integration
+===================================================== */
 
-        console.log("URL:", window.location.href);
-        console.log("isPackageId:", isPackageId);
-        console.log("tourName:", tourName);
+const API_URL =
+"https://samkarantraveller-management-system.vercel.app/api/public-packages";
 
-        if (!isPackageId) {
-            console.log("STOP: isPackageId is false");
-            return;
-        }
+const params = new URLSearchParams(window.location.search);
 
-        const response = await fetch(
-            "https://samkarantraveller-management-system.vercel.app/api/public-packages"
-        );
+const tourName =
+    params.get("tour") ||
+    params.get("id") ||
+    "kedarnath";
 
-        if (!response.ok) {
-            throw new Error("Package API Error: " + response.status);
-        }
+let tour = {};
+let selectedTransport = null;
+let selectedDate = "05 Sep 2026";
+let selectedBookingPax = 0;
 
-        const data = await response.json();
+let galleryImages = [];
+let currentGalleryIndex = 0;
+let galleryTimer = null;
 
-        console.log("API Packages:", data.packages);
+let availableVehicles = [];
 
-        const packageData = (data.packages || []).find(
-            pkg => String(pkg.id) === String(tourName)
-        );
 
-        console.log("Matched Package:", packageData);
+/* =====================================================
+   COMMON HELPERS
+===================================================== */
 
-        if (!packageData) {
-            console.log("STOP: Package ID not matched");
-            return;
-        }
+function getVehicles() {
+    const vehicles =
+        tour.transport_details?.vehicles ||
+        tour.transport ||
+        [];
 
-        tour = packageData;
-        
-    /* Refresh enquiry vehicle selection */
+    return Array.isArray(vehicles)
+        ? vehicles.filter(v => v && v.selected !== false)
+        : [];
+}
 
-const availableVehicles =
-    (tour.transport_details?.vehicles || tour.transport || [])
-    .filter(vehicle => vehicle.selected !== false);
+function formatPrice(value) {
+    return Number(value || 0).toLocaleString("en-IN");
+}
 
-selectedTransport = availableVehicles[0] || null;
+function getItemText(item) {
+    if (typeof item === "string") return item;
 
-const bookingVehicle =
-    document.getElementById("bookingVehicle");
+    return item?.name ||
+        item?.title ||
+        item?.description ||
+        item?.activity ||
+        "";
+}
 
-const bookingVehicleCards =
-    document.getElementById("bookingVehicleCards");
+function setText(id, value) {
+    const element = document.getElementById(id);
 
-bookingVehicle.innerHTML =
-    '<option value="">Select Vehicle</option>';
+    if (element) {
+        element.textContent = value ?? "";
+    }
+}
 
-bookingVehicleCards.innerHTML = "";
 
-availableVehicles.forEach((vehicle, index) => {
+/* =====================================================
+   LOAD TOUR BASIC INFORMATION
+===================================================== */
 
-    const option = document.createElement("option");
-    option.value = vehicle.name || `Vehicle ${index + 1}`;
-    option.textContent = vehicle.name || "Vehicle";
+function renderTourDetails() {
 
-    bookingVehicle.appendChild(option);
+    setText("tourTitle", tour.title || tour.name || "Tour Details");
 
-    const icon =
-        /bus|tempo|urbania/i.test(vehicle.name) ? "🚌" :
-        /innova|suv|xylo/i.test(vehicle.name) ? "🚙" :
-        /sedan|swift|dzire/i.test(vehicle.name) ? "🚘" : "🚐";
+    setText(
+        "tourDuration",
+        "⏱ " + (
+            tour.duration ||
+            `${tour.duration_days || 0} Days / ${tour.duration_nights || 0} Nights`
+        )
+    );
 
-    bookingVehicleCards.innerHTML += `
-        <div class="booking-vehicle-card ${index === 0 ? "selected" : ""}"
-             onclick="selectBookingVehicle(${index})">
-            <span class="vehicle-icon">${icon}</span>
-            <strong>${vehicle.name || "Vehicle"}</strong>
-            <small>₹${Number(vehicle.price || 0).toLocaleString("en-IN")}</small>
-        </div>
-    `;
-});
+    setText(
+        "tourRoute",
+        "📍 " + (
+            tour.route ||
+            tour.destination ||
+            "Uttarakhand"
+        )
+    );
 
-bookingVehicle.value =
-    selectedTransport ? selectedTransport.name : "";
+    setText("tourPrice", formatPrice(tour.price));
 
-   renderDayWiseItinerary(tour.itinerary);
+    setText(
+        "tourOverview",
+        tour.overview ||
+        tour.short_description ||
+        "Tour details coming soon."
+    );
 
-     const includedBox = document.getElementById("included");
-          includedBox.innerHTML = "";
+    setText("summaryTourPrice", formatPrice(tour.price));
+}
 
-         (tour.inclusions || []).forEach(item => {
-         includedBox.innerHTML += `<li>${typeof item === "string" ? item : item.name || item.title || item.description || ""}</li>`;
-      });
-        
-    const excludedBox = document.getElementById("excluded");
-          excludedBox.innerHTML = "";
 
-         (tour.exclusions || []).forEach(item => {
-         excludedBox.innerHTML += `<li>${typeof item === "string" ? item : item.name || item.title || item.description || ""}</li>`;
-    });
-        
-        document.getElementById("tourTitle").textContent =
-            tour.title;
-        
-    /* Refresh vehicle and price summary */
+/* =====================================================
+   GALLERY SLIDER
+===================================================== */
 
-updateSummary();
+function renderGallery() {
 
-        /* ================= LOAD PACKAGE GALLERY ================= */
+    galleryImages = [
+        tour.cover_image_url,
+        tour.image,
+        ...(Array.isArray(tour.gallery) ? tour.gallery : [])
+    ].filter(Boolean);
 
-              galleryImages = [
-              tour.cover_image_url,
-             ...(tour.gallery || [])
-            ].filter(Boolean);
+    galleryImages = [...new Set(galleryImages)];
 
-            galleryImages = [...new Set(galleryImages)];
+    const dots = document.getElementById("galleryDots");
 
-            currentGalleryIndex = 0;
+    if (dots) dots.innerHTML = "";
 
-    const galleryDots = document.getElementById("galleryDots");
-                       galleryDots.innerHTML = "";
+    galleryImages.forEach((image, index) => {
 
-             galleryImages.forEach((image, index) => {
-             galleryDots.innerHTML += `
-        <button class="gallery-dot ${index === 0 ? "active" : ""}"
+        if (!dots) return;
+
+        dots.innerHTML += `
+            <button
+                class="gallery-dot ${index === 0 ? "active" : ""}"
                 onclick="showGallerySlide(${index})">
             </button>
         `;
     });
 
-          if (galleryImages.length > 0) {
-              showGallerySlide(0);
-             startGalleryAutoSlide();
-         }
+    currentGalleryIndex = 0;
 
-        document.getElementById("tourDuration").textContent =
-            `⏱ ${tour.duration_days} Days / ${tour.duration_nights} Nights`;
+    if (galleryImages.length) {
+        showGallerySlide(0);
+        startGalleryAutoSlide();
+    }
+}
 
-        document.getElementById("tourRoute").textContent =
-            "📍 " + (tour.destination || "Uttarakhand");
+function showGallerySlide(index) {
 
-        document.getElementById("tourPrice").textContent =
-            Number(tour.price || 0).toLocaleString("en-IN");
+    if (!galleryImages.length) return;
 
-        document.getElementById("tourOverview").textContent =
-            tour.overview || tour.short_description || "Tour details coming soon.";
+    currentGalleryIndex =
+        (index + galleryImages.length) % galleryImages.length;
 
-        /* ================= LOAD PREMIUM HOTEL DETAILS ================= */
+    const image = document.getElementById("tourImage");
 
-const hotelDetailsGrid =
-    document.getElementById("hotelDetailsGrid");
+    if (image) {
+        image.src = galleryImages[currentGalleryIndex];
+    }
 
-hotelDetailsGrid.innerHTML = "";
-
-if (!tour.hotel_details || tour.hotel_details.length === 0) {
-
-    hotelDetailsGrid.innerHTML =
-        "<p>Hotel details are not available for this package.</p>";
-
-} else {
-
-    tour.hotel_details.forEach(hotel => {
-
-        const experiences = Array.isArray(hotel.experiences)
-            ? hotel.experiences
-            : [];
-
-        const meals = Array.isArray(hotel.included_meals)
-            ? hotel.included_meals
-            : (Array.isArray(hotel.meals) ? hotel.meals : []);
-
-        const amenities = Array.isArray(hotel.amenities)
-            ? hotel.amenities
-            : [];
-
-        hotelDetailsGrid.innerHTML += `
-
-           <div class="day hotel-card"
-            
-              onclick="selectHotelCard(this)">
-
-                <div class="hotel-location">
-                    📍 ${hotel.location || "Location"}
-                </div>
-
-                <h3>🏨 ${hotel.name || hotel.hotel_name || "Hotel"}</h3>
-
-                <p><strong>Category:</strong>
-                    ${hotel.category || "Not specified"}
-                </p>
-
-                <p><strong>Room Type:</strong>
-                    ${hotel.room_type || "Not specified"}
-                </p>
-
-                <p><strong>Stay:</strong>
-                    ${hotel.nights || 0} Nights
-                </p>
-
-                <p>${hotel.description || ""}</p>
-
-                ${experiences.length ? `
-                    <div class="hotel-tags">
-                        <strong>Experiences:</strong>
-                        ${experiences.map(item =>
-                            `<span>${item}</span>`
-                        ).join("")}
-                    </div>
-                ` : ""}
-
-                ${meals.length ? `
-                    <div class="hotel-meals">
-                        <strong>Included Meals:</strong>
-                        ${meals.map(meal =>
-                            `<span>✓ ${meal}</span>`
-                        ).join("")}
-                    </div>
-                ` : ""}
-
-                ${amenities.length ? `
-                    <p><strong>Amenities:</strong>
-                        ${amenities.join(", ")}
-                    </p>
-                ` : ""}
-
-            </div>
-        `;
+    document.querySelectorAll(".gallery-dot").forEach((dot, i) => {
+        dot.classList.toggle(
+            "active",
+            i === currentGalleryIndex
+        );
     });
 }
-        
-        const activitiesGrid =
-    document.getElementById("activitiesGrid");
 
-activitiesGrid.innerHTML = "";
-
-(tour.activities || []).forEach(activity => {
-
-    const activityName =
-        typeof activity === "string"
-            ? activity
-            : activity.name ||
-              activity.title ||
-              activity.activity ||
-              activity.description ||
-              "";
-
-    if (activityName) {
-        activitiesGrid.innerHTML +=
-            `<p>${activityName}</p>`;
-    }
-});
-        const transportGrid =
-    document.getElementById("transportGrid");
-
-transportGrid.innerHTML = "";
-
-const availableVehicles =
-    (tour.transport_details?.vehicles || tour.transport || [])
-    .filter(vehicle => vehicle.selected !== false);
-
-availableVehicles.forEach((vehicle, index) => {
-
-    transportGrid.innerHTML += `
-        <div class="vehicle ${index === 0 ? "selected" : ""}"
-             onclick="selectVehicle(${index})"
-             id="vehicle-${index}">
-
-            <img src="${vehicle.image || ""}" alt="${vehicle.name || "Vehicle"}">
-
-            <div class="vehicle-info">
-                <h3>${vehicle.name || "Vehicle"}</h3>
-
-                <div class="capacity">
-                    👥 ${vehicle.persons || 0} Persons
-                </div>
-
-                <div class="vehicle-price">
-                    ₹${Number(vehicle.price || 0).toLocaleString("en-IN")}
-                </div>
-
-                <button class="select-btn" type="button">Select Vehicle</button>
-            </div>
-        </div>
-    `;
-});
-
-selectedTransport = availableVehicles[0] || null;
-
-renderBookingPaxOptions();
-updateSummary();
-
-    } catch (error) {
-
-        console.error("Package loading failed:", error);
-
-    }
-
+function changeGallerySlide(direction) {
+    showGallerySlide(currentGalleryIndex + direction);
+    startGalleryAutoSlide();
 }
 
-/* ================= TOUR INCLUDES CLICK ================= */
+function startGalleryAutoSlide() {
 
-function toggleTourInclude(element) {
+    clearInterval(galleryTimer);
 
-    document.querySelectorAll(".tour-include-item").forEach(item => {
-        item.classList.remove("active");
-    });
+    if (galleryImages.length > 1) {
 
-    element.classList.add("active");
+        galleryTimer = setInterval(() => {
+            showGallerySlide(currentGalleryIndex + 1);
+        }, 3000);
+    }
 }
 
-// Screen ke khaali area par click karne se selection hatayein
-document.addEventListener("click", function(event) {
 
-    if (!event.target.closest(".tour-include-item")) {
+/* =====================================================
+   MOBILE GALLERY SWIPE
+===================================================== */
 
-        document.querySelectorAll(".tour-include-item").forEach(item => {
-            item.classList.remove("active");
-        });
+let touchStartX = 0;
 
-    }
+const tourGallery = document.getElementById("tourGallery");
 
-});
+if (tourGallery) {
 
-    
-// ================= DAY WISE ITINERARY =================
+    tourGallery.addEventListener("touchstart", function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    tourGallery.addEventListener("touchend", function(e) {
+
+        const difference =
+            touchStartX - e.changedTouches[0].screenX;
+
+        if (Math.abs(difference) > 50) {
+            changeGallerySlide(difference > 0 ? 1 : -1);
+        }
+
+    }, { passive: true });
+}
+
+
+/* =====================================================
+   ITINERARY
+===================================================== */
 
 function renderDayWiseItinerary(days) {
-    const itineraryBox = document.getElementById("itinerary");
 
-    if (!itineraryBox) return;
+    const box = document.getElementById("itinerary");
 
-    itineraryBox.innerHTML = "";
+    if (!box) return;
 
-    (days || []).forEach((day, index) => {
-        const title = day.day || day.title || day[0] || "Tour Day";
-        const route = day.route || day.location || day[1] || "";
-        const description = day.description || day.details || day[2] || "";
+    box.innerHTML = "";
 
-        itineraryBox.innerHTML += `
+    if (!Array.isArray(days) || !days.length) {
+        box.innerHTML = "<p>Itinerary details not available.</p>";
+        return;
+    }
+
+    days.forEach((day, index) => {
+
+        const title =
+            day.day || day.title || day[0] || "Tour Day";
+
+        const route =
+            day.route || day.location || day[1] || "";
+
+        const description =
+            day.description || day.details || day[2] || "";
+
+        box.innerHTML += `
             <div class="day-wise-item ${index === 0 ? "active" : ""}">
 
                 <button
@@ -3744,20 +3644,24 @@ function renderDayWiseItinerary(days) {
     });
 }
 
-// Open / Close individual day
 function toggleDay(button) {
+
     const item = button.closest(".day-wise-item");
+
+    if (!item) return;
+
     item.classList.toggle("active");
 
     button.setAttribute(
         "aria-expanded",
-        item.classList.contains("active")
+        String(item.classList.contains("active"))
     );
 }
 
-// Show All / Show Less
 function toggleAllDays() {
+
     const items = document.querySelectorAll(".day-wise-item");
+
     const button = document.getElementById("showAllDaysBtn");
 
     const allOpen = [...items].every(item =>
@@ -3765,11 +3669,16 @@ function toggleAllDays() {
     );
 
     items.forEach(item => {
+
         item.classList.toggle("active", !allOpen);
 
         const toggle = item.querySelector(".day-wise-toggle");
+
         if (toggle) {
-            toggle.setAttribute("aria-expanded", String(!allOpen));
+            toggle.setAttribute(
+                "aria-expanded",
+                String(!allOpen)
+            );
         }
     });
 
@@ -3779,6 +3688,769 @@ function toggleAllDays() {
             : "Show Less ↑";
     }
 }
+
+
+/* =====================================================
+   INCLUSIONS AND EXCLUSIONS
+===================================================== */
+
+function renderInclusions() {
+
+    const included = document.getElementById("included");
+    const excluded = document.getElementById("excluded");
+
+    if (included) {
+
+        included.innerHTML = "";
+
+        (tour.inclusions || tour.included || []).forEach(item => {
+
+            const text = getItemText(item);
+
+            if (text) {
+                included.innerHTML += `<li>${text}</li>`;
+            }
+        });
+    }
+
+    if (excluded) {
+
+        excluded.innerHTML = "";
+
+        (tour.exclusions || tour.excluded || []).forEach(item => {
+
+            const text = getItemText(item);
+
+            if (text) {
+                excluded.innerHTML += `<li>${text}</li>`;
+            }
+        });
+    }
+}
+
+
+/* =====================================================
+   ACTIVITIES
+===================================================== */
+
+function renderActivities() {
+
+    const box = document.getElementById("activitiesGrid");
+
+    if (!box) return;
+
+    box.innerHTML = "";
+
+    (tour.activities || []).forEach(activity => {
+
+        const name = getItemText(activity);
+
+        if (name) {
+            box.innerHTML += `<p>${name}</p>`;
+        }
+    });
+
+    if (!box.innerHTML) {
+        box.innerHTML = "<p>Activities details not available.</p>";
+    }
+}
+
+
+/* =====================================================
+   HOTELS
+===================================================== */
+
+function renderHotels() {
+
+    const box = document.getElementById("hotelDetailsGrid");
+
+    if (!box) return;
+
+    box.innerHTML = "";
+
+    const hotels = tour.hotel_details || [];
+
+    if (!hotels.length) {
+        box.innerHTML = "<p>Hotel details are not available for this package.</p>";
+        return;
+    }
+
+    hotels.forEach(hotel => {
+
+        const experiences = hotel.experiences || [];
+        const meals = hotel.included_meals || hotel.meals || [];
+        const amenities = hotel.amenities || [];
+
+        box.innerHTML += `
+            <div class="day hotel-card"
+                 onclick="selectHotelCard(this)">
+
+                <div class="hotel-location">
+                    📍 ${hotel.location || "Location"}
+                </div>
+
+                <h3>🏨 ${hotel.name || hotel.hotel_name || "Hotel"}</h3>
+
+                <p><strong>Category:</strong> ${hotel.category || "Not specified"}</p>
+
+                <p><strong>Room Type:</strong> ${hotel.room_type || "Not specified"}</p>
+
+                <p><strong>Stay:</strong> ${hotel.nights || 0} Nights</p>
+
+                <p>${hotel.description || ""}</p>
+
+                ${experiences.length ? `
+                    <div class="hotel-tags">
+                        <strong>Experiences:</strong>
+                        ${experiences.map(x => `<span>${getItemText(x)}</span>`).join("")}
+                    </div>
+                ` : ""}
+
+                ${meals.length ? `
+                    <div class="hotel-meals">
+                        <strong>Included Meals:</strong>
+                        ${meals.map(x => `<span>✓ ${getItemText(x)}</span>`).join("")}
+                    </div>
+                ` : ""}
+
+                ${amenities.length ? `
+                    <p><strong>Amenities:</strong>
+                    ${amenities.map(x => getItemText(x)).join(", ")}</p>
+                ` : ""}
+
+            </div>
+        `;
+    });
+}
+
+function selectHotelCard(card) {
+
+    document.querySelectorAll(".hotel-card").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    card.classList.add("active");
+}
+
+
+/* =====================================================
+   VEHICLE RENDERING
+===================================================== */
+
+function renderVehicles() {
+
+    availableVehicles = getVehicles();
+
+    const transportGrid =
+        document.getElementById("transportGrid");
+
+    const bookingCards =
+        document.getElementById("bookingVehicleCards");
+
+    const bookingSelect =
+        document.getElementById("bookingVehicle");
+
+    if (transportGrid) transportGrid.innerHTML = "";
+
+    if (bookingCards) bookingCards.innerHTML = "";
+
+    if (bookingSelect) {
+        bookingSelect.innerHTML =
+            '<option value="">Select Vehicle</option>';
+    }
+
+    if (!availableVehicles.length) {
+
+        if (transportGrid) {
+            transportGrid.innerHTML = "<p>Vehicles not available.</p>";
+        }
+
+        if (bookingCards) {
+            bookingCards.innerHTML = "<p>No vehicle available.</p>";
+        }
+
+        selectedTransport = null;
+
+        renderBookingPaxOptions();
+        updateSummary();
+
+        return;
+    }
+
+    availableVehicles.forEach((vehicle, index) => {
+
+        const name = vehicle.name || `Vehicle ${index + 1}`;
+
+        const price = Number(vehicle.price || 0);
+
+        const capacity = Number(vehicle.persons || 0);
+
+        const icon =
+            /bus|tempo|urbania/i.test(name) ? "🚌" :
+            /innova|suv|xylo/i.test(name) ? "🚙" :
+            /sedan|swift|dzire/i.test(name) ? "🚘" :
+            "🚐";
+
+        if (transportGrid) {
+
+            transportGrid.innerHTML += `
+                <div class="vehicle ${index === 0 ? "selected" : ""}"
+                     onclick="selectVehicle(${index})"
+                     id="vehicle-${index}">
+
+                    <img src="${vehicle.image || ""}" alt="${name}">
+
+                    <div class="vehicle-info">
+
+                        <h3>${name}</h3>
+
+                        <div class="capacity">
+                            👥 ${capacity} Persons
+                        </div>
+
+                        <div class="vehicle-price">
+                            ₹${formatPrice(price)}
+                        </div>
+
+                        <button type="button" class="select-btn">
+                            Select Vehicle
+                        </button>
+
+                    </div>
+                </div>
+            `;
+        }
+
+        if (bookingSelect) {
+
+            const option = document.createElement("option");
+
+            option.value = name;
+            option.textContent = `${name} - ₹${formatPrice(price)}`;
+
+            bookingSelect.appendChild(option);
+        }
+
+        if (bookingCards) {
+
+            bookingCards.innerHTML += `
+                <div class="booking-vehicle-card ${index === 0 ? "selected" : ""}"
+                     onclick="selectBookingVehicle(${index})">
+
+                    <span class="vehicle-icon">${icon}</span>
+
+                    <strong>${name}</strong>
+
+                    <small>₹${formatPrice(price)}</small>
+
+                </div>
+            `;
+        }
+    });
+
+    selectedTransport = availableVehicles[0];
+
+    if (bookingSelect) {
+        bookingSelect.value = selectedTransport.name || "";
+    }
+
+    renderBookingPaxOptions();
+    updateSummary();
+}
+
+
+function selectVehicle(index) {
+
+    selectedTransport = availableVehicles[index] || null;
+
+    document.querySelectorAll(".vehicle").forEach((element, i) => {
+        element.classList.toggle("selected", i === index);
+    });
+
+    document.querySelectorAll(".booking-vehicle-card").forEach((element, i) => {
+        element.classList.toggle("selected", i === index);
+    });
+
+    const bookingSelect =
+        document.getElementById("bookingVehicle");
+
+    if (bookingSelect && selectedTransport) {
+        bookingSelect.value = selectedTransport.name || "";
+    }
+
+    selectedBookingPax = 0;
+
+    renderBookingPaxOptions();
+    updateSummary();
+}
+
+
+function selectBookingVehicle(index) {
+    selectVehicle(index);
+}
+
+
+/* =====================================================
+   PAX OPTIONS
+===================================================== */
+
+function renderBookingPaxOptions() {
+
+    const box = document.getElementById("bookingPaxOptions");
+
+    if (!box) return;
+
+    box.innerHTML = "";
+
+    if (!selectedTransport) return;
+
+    const capacity = Number(selectedTransport.persons || 0);
+
+    for (let pax = 2; pax <= capacity; pax++) {
+
+        box.innerHTML += `
+            <button
+                type="button"
+                class="pax-option ${selectedBookingPax === pax ? "active" : ""}"
+                onclick="selectBookingPax(${pax}, this)">
+                ${pax} Pax
+            </button>
+        `;
+    }
+}
+
+
+function selectBookingPax(pax, button) {
+
+    const kids = Number(
+        document.getElementById("bookingKids").value || 0
+    );
+
+    if (pax < kids + 1) {
+        alert("Selected Pax must include all children and at least one adult.");
+        return;
+    }
+
+    selectedBookingPax = pax;
+
+    document.getElementById("bookingAdults").value = pax - kids;
+
+    document.querySelectorAll(".pax-option").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    updateSummary();
+}
+
+
+/* =====================================================
+   DEPARTURE DATE
+===================================================== */
+
+function selectDate(element, date) {
+
+    document.querySelectorAll(".date-box").forEach(box => {
+        box.classList.remove("active");
+    });
+
+    element.classList.add("active");
+
+    selectedDate = date;
+
+    setText("selectedDate", selectedDate);
+
+    updateSummary();
+}
+
+
+/* =====================================================
+   ADULTS AND KIDS COUNTER
+===================================================== */
+
+function changeTravellerCount(inputId, change) {
+
+    const input = document.getElementById(inputId);
+
+    if (!input) return;
+
+    const min = Number(input.min || 0);
+
+    const current = Number(input.value || 0);
+
+    const next = Math.max(min, current + change);
+
+    const adults = inputId === "bookingAdults"
+        ? next
+        : Number(document.getElementById("bookingAdults").value);
+
+    const kids = inputId === "bookingKids"
+        ? next
+        : Number(document.getElementById("bookingKids").value);
+
+    const capacity = Number(selectedTransport?.persons || 0);
+
+    if (capacity && adults + kids > capacity) {
+        alert(`Selected vehicle capacity is ${capacity} persons.`);
+        return;
+    }
+
+    input.value = next;
+
+    selectedBookingPax = 0;
+
+    renderBookingPaxOptions();
+    updateSummary();
+}
+
+
+/* =====================================================
+   BOOKING SUMMARY
+===================================================== */
+
+function updateSummary() {
+
+    const adults = Math.max(
+        1,
+        Number(document.getElementById("bookingAdults")?.value || 1)
+    );
+
+    const kids = Math.max(
+        0,
+        Number(document.getElementById("bookingKids")?.value || 0)
+    );
+
+    const persons = adults + kids;
+
+    const tourPrice = Number(tour.price || 0);
+
+    const transportPrice = Number(selectedTransport?.price || 0);
+
+    const totalTourPrice = tourPrice * persons;
+
+    // Vehicle price is for the complete vehicle, not per person.
+    const totalTransportPrice = transportPrice;
+
+    const total = totalTourPrice + totalTransportPrice;
+
+    setText("summaryTourPrice", formatPrice(totalTourPrice));
+    setText("transportPrice", formatPrice(totalTransportPrice));
+
+    setText(
+        "summaryVehicleName",
+        selectedTransport?.name || "Not Selected"
+    );
+
+    setText("persons", persons);
+    setText("totalPrice", formatPrice(total));
+    setText("bookingEstimatedTotal", formatPrice(total));
+
+    const bookingDate = document.getElementById("bookingDate");
+
+    if (bookingDate?.value) {
+        selectedDate = bookingDate.value;
+    }
+
+    setText("selectedDate", selectedDate);
+}
+
+
+/* =====================================================
+   TOUR INFORMATION TABS
+===================================================== */
+
+function showTourInfoTab(tab) {
+
+    const included = document.getElementById("included");
+    const excluded = document.getElementById("excluded");
+
+    const tabs = document.querySelectorAll(".tour-tab");
+
+    if (!included || !excluded) return;
+
+    if (tab === "included") {
+
+        included.style.display = "block";
+        excluded.style.display = "none";
+
+        tabs[0]?.classList.add("active");
+        tabs[1]?.classList.remove("active");
+
+    } else {
+
+        included.style.display = "none";
+        excluded.style.display = "block";
+
+        tabs[0]?.classList.remove("active");
+        tabs[1]?.classList.add("active");
+    }
+}
+
+
+/* =====================================================
+   TOUR INCLUDES CLICK
+===================================================== */
+
+function toggleTourInclude(element) {
+
+    document.querySelectorAll(".tour-include-item").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    element.classList.add("active");
+}
+
+
+/* =====================================================
+   BOOKING DATE INPUT
+===================================================== */
+
+const bookingDateInput =
+    document.getElementById("bookingDate");
+
+if (bookingDateInput) {
+
+    bookingDateInput.addEventListener("change", function() {
+
+        if (this.value) {
+            selectedDate = this.value;
+            updateSummary();
+        }
+    });
+}
+
+
+/* =====================================================
+   SUBMIT TOUR INQUIRY
+===================================================== */
+
+function submitTourInquiry() {
+
+    const name =
+        document.getElementById("travellerName").value.trim();
+
+    const email =
+        document.getElementById("travellerEmail").value.trim();
+
+    const mobile =
+        document.getElementById("travellerMobile").value.trim();
+
+    const date =
+        document.getElementById("bookingDate").value;
+
+    const adults = Number(
+        document.getElementById("bookingAdults").value || 1
+    );
+
+    const kids = Number(
+        document.getElementById("bookingKids").value || 0
+    );
+
+    const notes =
+        document.getElementById("customerNotes").value.trim();
+
+    if (!name || !mobile || !date) {
+        alert("Please enter your name, mobile number and travel date.");
+        return;
+    }
+
+    const persons = adults + kids;
+
+    const totalTour = Number(tour.price || 0) * persons;
+
+    const totalTransport = Number(selectedTransport?.price || 0);
+
+    const total = totalTour + totalTransport;
+
+    const message =
+`SamKaranTraveller - New Tour Inquiry
+
+Tour: ${tour.title || tour.name || ""}
+Name: ${name}
+Email: ${email || "Not provided"}
+Mobile: ${mobile}
+Travel Date: ${date}
+
+Adults: ${adults}
+Kids: ${kids}
+Total Persons: ${persons}
+
+Vehicle: ${selectedTransport?.name || "Not selected"}
+
+Selected Pax: ${selectedBookingPax || persons}
+
+Tour Package: ₹${formatPrice(totalTour)}
+Transportation: ₹${formatPrice(totalTransport)}
+Grand Total: ₹${formatPrice(total)}
+
+Customer Notes: ${notes || "None"}
+
+Please contact me regarding this tour.`;
+
+    window.open(
+        "https://wa.me/918266975481?text=" +
+        encodeURIComponent(message),
+        "_blank"
+    );
+}
+
+
+/* =====================================================
+   BOOK NOW
+===================================================== */
+
+function bookNow() {
+
+    if (!selectedTransport) {
+        alert("Please select a vehicle before booking.");
+        return;
+    }
+
+    const adults = Number(
+        document.getElementById("bookingAdults").value || 1
+    );
+
+    const kids = Number(
+        document.getElementById("bookingKids").value || 0
+    );
+
+    const persons = adults + kids;
+
+    const totalTour = Number(tour.price || 0) * persons;
+
+    const totalTransport = Number(selectedTransport.price || 0);
+
+    const total = totalTour + totalTransport;
+
+    const message =
+`Hello SamKaranTraveller,
+
+I want to book:
+
+Tour: ${tour.title || tour.name || ""}
+Departure: ${selectedDate}
+
+Adults: ${adults}
+Kids: ${kids}
+Total Persons: ${persons}
+
+Selected Vehicle: ${selectedTransport.name}
+
+Tour Package: ₹${formatPrice(totalTour)}
+Transportation: ₹${formatPrice(totalTransport)}
+
+Grand Total: ₹${formatPrice(total)}`;
+
+    window.open(
+        "https://wa.me/917895612495?text=" +
+        encodeURIComponent(message),
+        "_blank"
+    );
+}
+
+
+/* =====================================================
+   LOAD PACKAGE FROM MANAGEMENT SYSTEM
+===================================================== */
+
+async function loadManagementPackage() {
+
+    try {
+
+        console.log("Loading tour:", tourName);
+
+        setText("tourTitle", "Loading Tour Details...");
+
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+            throw new Error("Package API Error: " + response.status);
+        }
+
+        const data = await response.json();
+
+        const packages = Array.isArray(data.packages)
+            ? data.packages
+            : [];
+
+        console.log("Management Packages:", packages);
+
+        const packageData = packages.find(pkg => {
+
+            const id = String(pkg.id || "");
+
+            const slug = String(pkg.slug || "").toLowerCase();
+
+            const title = String(pkg.title || pkg.name || "").toLowerCase();
+
+            const search = String(tourName).toLowerCase();
+
+            return id === search ||
+                slug === search ||
+                title === search;
+        });
+
+        if (!packageData) {
+
+            console.error("Package not found:", tourName);
+
+            setText(
+                "tourTitle",
+                "Tour Package Not Found"
+            );
+
+            setText(
+                "tourOverview",
+                "This package could not be found. Please return to our packages page and select a valid package."
+            );
+
+            return;
+        }
+
+        // Main package data
+        tour = packageData;
+
+        console.log("Loaded Package:", tour);
+
+        // Render every section from the same package
+        renderTourDetails();
+        renderGallery();
+        renderDayWiseItinerary(tour.itinerary || []);
+        renderInclusions();
+        renderActivities();
+        renderHotels();
+        renderVehicles();
+
+        updateSummary();
+
+        console.log("Tour page successfully loaded.");
+
+    } catch (error) {
+
+        console.error("Package loading failed:", error);
+
+        setText("tourTitle", "Unable to Load Tour");
+
+        setText(
+            "tourOverview",
+            "Unable to load package details. Please try again later."
+        );
+    }
+}
+
+
+/* =====================================================
+   INITIALIZE PAGE
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    loadManagementPackage();
+
+});
+
+              
     
 loadManagementPackage();
     
