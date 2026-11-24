@@ -2459,6 +2459,18 @@ a{
             <p>Select your preferred vehicle</p>
         </div>
 
+        
+<!-- SELECT NUMBER OF PERSONS -->
+
+<div class="booking-pax-section">
+
+    <h3>SELECT NUMBER OF PERSONS</h3>
+
+    <div id="bookingPaxOptions" class="booking-pax-options">
+    </div>
+
+</div>
+        
         <h3>2. DEPARTURE DATE</h3>
 
         <input type="date" id="bookingDate">
@@ -3265,7 +3277,9 @@ function selectVehicle(index) {
     if (bookingVehicle && selectedTransport) {
         bookingVehicle.value = selectedTransport.name;
     }
-
+    
+  renderBookingPaxOptions();
+    
     updateSummary();
 }
 
@@ -3290,11 +3304,63 @@ function selectDate(element, date){
     updateSummary();
 }
 
+
 /* ================= DYNAMIC ENQUIRY SUMMARY ================= */
+
+let selectedBookingPax = 0;
+
+
+/* ================= DYNAMIC PAX OPTIONS ================= */
+
+function renderBookingPaxOptions() {
+
+    const paxContainer =
+        document.getElementById("bookingPaxOptions");
+
+    if (!paxContainer) return;
+
+    paxContainer.innerHTML = "";
+
+    if (!selectedTransport) return;
+
+    const capacity = Number(selectedTransport.persons || 0);
+
+    for (let pax = 2; pax <= capacity; pax++) {
+
+        paxContainer.innerHTML += `
+            <button
+                type="button"
+                class="pax-option"
+                onclick="selectBookingPax(${pax}, this)">
+                ${pax} Pax
+            </button>
+        `;
+    }
+
+    selectedBookingPax = 0;
+}
+
+
+/* ================= SELECT PAX ================= */
+
+function selectBookingPax(pax, button) {
+
+    selectedBookingPax = pax;
+
+    document.querySelectorAll(".pax-option").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+}
+
+
+/* ================= TRAVELLER COUNTER ================= */
 
 function changeTravellerCount(inputId, change) {
 
     const input = document.getElementById(inputId);
+
     const min = Number(input.min || 0);
     const current = Number(input.value || 0);
 
@@ -3303,8 +3369,10 @@ function changeTravellerCount(inputId, change) {
     updateSummary();
 }
 
-function updateSummary() {
 
+/* ================= UPDATE BOOKING SUMMARY ================= */
+
+function updateSummary() {
 
     const tourPrice = Number(tour.price || 0);
 
@@ -3312,19 +3380,24 @@ function updateSummary() {
         ? Number(selectedTransport.price || 0)
         : 0;
 
-    const adults = Math.max(1,
+    const adults = Math.max(
+        1,
         Number(document.getElementById("bookingAdults").value || 1)
     );
 
-    const kids = Math.max(0,
+    const kids = Math.max(
+        0,
         Number(document.getElementById("bookingKids").value || 0)
     );
 
     const persons = adults + kids;
 
     const totalTourPrice = tourPrice * persons;
+
     const totalTransportPrice = transportPrice * persons;
+
     const total = totalTourPrice + totalTransportPrice;
+
 
     document.getElementById("summaryTourPrice").textContent =
         totalTourPrice.toLocaleString("en-IN");
@@ -3343,25 +3416,17 @@ function updateSummary() {
 
     document.getElementById("persons").textContent = persons;
 
-    const bookingDate = document.getElementById("bookingDate");
+
+    const bookingDate =
+        document.getElementById("bookingDate");
 
     if (bookingDate.value) {
         selectedDate = bookingDate.value;
     }
 
-    document.getElementById("selectedDate").textContent = selectedDate;
-               }
-    
-
-/* UPDATE TOTAL WHEN TRAVELLERS CHANGE */
-
-document.getElementById("bookingAdults").addEventListener("input", updateSummary);
-document.getElementById("bookingKids").addEventListener("input", updateSummary);
-
-document.getElementById("bookingDate").addEventListener("change", function() {
-    selectedDate = this.value;
-    updateSummary();
-});
+    document.getElementById("selectedDate").textContent =
+        selectedDate;
+}
     
     
 /* =====================================================
