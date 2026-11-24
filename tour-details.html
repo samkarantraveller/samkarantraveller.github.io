@@ -3230,6 +3230,8 @@ selectedTransport =
      tour.transport || [])
     .filter(vehicle => vehicle.selected !== false)[0] || null;
 
+     renderBookingPaxOptions();
+
 bookingVehicle.value =
     selectedTransport ? selectedTransport.name : "";
 
